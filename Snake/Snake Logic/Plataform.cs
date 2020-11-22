@@ -64,6 +64,7 @@ namespace Snake_Logic
         /// <summary>
         /// Objetos distintos na Plataforma.
         /// </summary>
+        public int AppleDeacreaseSpeed { get; set; }
         public List<PlataformObject> Objects { get; set; }
         private Random rd;
 
@@ -105,6 +106,7 @@ namespace Snake_Logic
             ApplePower = 2;
             CollectedApples = 1;
             MaxApples = 2;
+            AppleDeacreaseSpeed = 200;
             Objects = new List<PlataformObject>();
             CreatePlataform(Direction.Right, new Point(Width / 2, Height / 2));
         }
@@ -124,6 +126,7 @@ namespace Snake_Logic
             ApplePower = 2;
             CollectedApples = 1;
             MaxApples = 2;
+            AppleDeacreaseSpeed = 200;
             Objects = new List<PlataformObject>();
             CreatePlataform(snake_direction, snake_point);
         }
@@ -268,7 +271,8 @@ namespace Snake_Logic
                     new Point(
                         rd.Next(0, Width),
                         rd.Next(0, Height)),
-                    ApplePower));
+                    ApplePower,
+                    AppleDeacreaseSpeed));
             }
             LoseGame += new LoseGameHandler((object sender, LoseGameArgs args) =>
             {
@@ -319,11 +323,17 @@ namespace Snake_Logic
                 }
                 Apples.RemoveAll(remove => remove.Location.Equals(args.Apple.Location));
                 Snake.Plataform.CollectedApples++;
+                if (MoveTimer.Interval>=AppleDeacreaseSpeed)
+                {
+                    MoveTimer.Interval -= AppleDeacreaseSpeed;
+                }
+
                 Apples.Add(new Apple(
                     new Point(
                         rd.Next(0, Width),
                         rd.Next(0, Height)),
-                    args.Power));
+                    ApplePower,
+                    AppleDeacreaseSpeed));
             });
         }
     }
