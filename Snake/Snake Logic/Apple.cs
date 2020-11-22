@@ -22,7 +22,7 @@ namespace Snake_Logic
         /// </summary>
         /// <param name="location">Local da Maçã.</param>
         /// <param name="power">"Poder" da Maçã.</param>
-        public Apple(Point location, int power,int speed_deacrease)
+        public Apple(Point location, int power, int speed_deacrease)
         {
             Location = location;
             AppleDeacreaseSpeed = speed_deacrease;

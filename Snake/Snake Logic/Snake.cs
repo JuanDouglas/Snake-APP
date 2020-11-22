@@ -44,7 +44,8 @@ namespace Snake_Logic
             Plataform = plataform ?? throw new ArgumentNullException(nameof(plataform));
             Head = new Head(this, location, direction);
             Blocks = new List<Block>();
-            SnakeUpprade += new SnakeUpgradeHandler((object sender,SnakeUpgradeArgs args)=>{
+            SnakeUpprade += new SnakeUpgradeHandler((object sender, SnakeUpgradeArgs args) =>
+            {
                 _ = args;
             });
         }
@@ -108,7 +109,8 @@ namespace Snake_Logic
             Head.MoveSnake();
         }
 
-        protected internal void SnakeUpgradeInvoke(object sender, SnakeUpgradeArgs args) {
+        protected internal void SnakeUpgradeInvoke(object sender, SnakeUpgradeArgs args)
+        {
             SnakeUpprade.Invoke(sender, args);
         }
     }

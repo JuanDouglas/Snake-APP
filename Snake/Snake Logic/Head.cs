@@ -58,12 +58,12 @@ namespace Snake_Logic
             switch (Snake.Plataform.GetContentInPoint(point))
             {
                 case PointCotent.Wall:
-                    Plataform.LoseInvoke(this,new LoseGameArgs(PointCotent.Wall,Plataform.Snake.Legacy,Plataform.CollectedApples));
+                    Plataform.LoseInvoke(this, new LoseGameArgs(PointCotent.Wall, Plataform.Snake.Legacy, Plataform.CollectedApples));
                     break;
                 case PointCotent.Apple:
                     base.Move();
                     Apple apple = Snake.Plataform.GetApple(point);
-                    Snake.SnakeUpgradeInvoke(apple, new SnakeUpgradeArgs(apple,Snake.Legacy.Value,Snake.Legacy.Value+apple.Power,Snake));
+                    Snake.SnakeUpgradeInvoke(apple, new SnakeUpgradeArgs(apple, Snake.Legacy.Value, Snake.Legacy.Value + apple.Power, Snake));
                     Snake.Plataform.CollectAppleInvoke(apple, new CollectAppleArgs(apple, apple.Power, Snake));
                     foreach (var item in Snake.Blocks)
                     {

@@ -278,7 +278,7 @@ namespace Snake_Logic
             {
                 _ = args;
             });
-            ObjectInteraction += new ObjectInteractionHandler((object sender,ObjectInteractionArgs args) =>
+            ObjectInteraction += new ObjectInteractionHandler((object sender, ObjectInteractionArgs args) =>
             {
                 _ = args;
             });
@@ -323,7 +323,7 @@ namespace Snake_Logic
                 }
                 Apples.RemoveAll(remove => remove.Location.Equals(args.Apple.Location));
                 Snake.Plataform.CollectedApples++;
-                if (MoveTimer.Interval>=AppleDeacreaseSpeed)
+                if (MoveTimer.Interval >= AppleDeacreaseSpeed)
                 {
                     MoveTimer.Interval -= AppleDeacreaseSpeed;
                 }
