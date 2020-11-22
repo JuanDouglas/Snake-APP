@@ -25,7 +25,7 @@ namespace Snake_Logic.Base
         /// <summary>
         /// Posição no índicie.
         /// </summary>
-        public int Index { get; set; }
+        public Nullable<int> Index { get; set; }
         /// <summary>
         /// Construtor de blocos secundários.
         /// </summary>
@@ -74,16 +74,16 @@ namespace Snake_Logic.Base
             switch (Direction)
             {
                 case Direction.Down:
-                    Location = new Point(Location.X, Location.Y + 1);
+                    Location = new Point(Location.X + 1, Location.Y);
                     break;
                 case Direction.UP:
-                    Location = new Point(Location.X, Location.Y - 1);
-                    break;
-                case Direction.Left:
                     Location = new Point(Location.X - 1, Location.Y);
                     break;
+                case Direction.Left:
+                    Location = new Point(Location.X, Location.Y - 1);
+                    break;
                 case Direction.Right:
-                    Location = new Point(Location.X + 1, Location.Y);
+                    Location = new Point(Location.X, Location.Y + 1);
                     break;
             }
         }

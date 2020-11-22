@@ -44,6 +44,9 @@
     <Compile Include="Apple.cs" />
     <Compile Include="Base\Block.cs" />
     <Compile Include="Enums\Direction.cs" />
+    <Compile Include="Event Args\LoseGameArgs.cs" />
+    <Compile Include="Event Args\MoveSnakeArgs.cs" />
+    <Compile Include="Event Args\CollectAppleArgs.cs" />
     <Compile Include="Head.cs" />
     <Compile Include="Plataform.cs" />
     <Compile Include="Enums\PointCotent.cs" />

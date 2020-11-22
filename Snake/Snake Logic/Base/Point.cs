@@ -42,7 +42,7 @@
                     }
                 }
             }
-            return base.Equals(obj);
+            return false;
         }
     }
 }
