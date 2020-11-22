@@ -4,45 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snake_Logic;
+using Snake_Logic.Base;
+using Snake_Logic.Enums;
+using Snake_Logic.Event_Args;
+
 namespace Snake_Console
 {
     class Program
     {
         static Plataform plataform;
+        static int Width = 10;
+        static int Height = 10;
+        static int Velocity = 1500;
+        static Random rd;
         static void Main(string[] args)
         {
-           plataform = new Plataform(10,10,1500);
-            plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler((object sender,Snake_Logic.Event_Args.MoveSnakeArgs moveArgs)=> {
-                Console.Clear();
-                for (int x = (-1); x < plataform.Width+2; x++)
-                {
-                    for (int y = (-1); y < plataform.Height+2; y++)
-                    {
-                        var px = plataform.GetContentInPoint(new Snake_Logic.Base.Point(x,y));
-                        switch (px)
-                        {
-                            case Snake_Logic.Enums.PointCotent.Null:
-                                Console.Write(".");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.Wall:
-                                Console.Write("W");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.Apple:
-                                Console.Write("A");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.SnakeBody:
-                                Console.Write("S");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.SnakeHead:
-                                Console.Write("H");
-                                break;
-                        }
-                    }
-                    Console.WriteLine();
-                }
-            });
+            rd = new Random();
+            plataform = new Plataform(Width,Height,Velocity);
+            plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler(MoveSnake);
             plataform.LoseGame += new Plataform.LoseGameHandler(Lose);
-            plataform.PlayGame();
+            for (int i = 0; i < rd.Next(0,Width/2); i++)
+            {
+                plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+            }
+            
+            plataform.Play();
             ConsoleKeyInfo consoleKey;
             do
             {
@@ -73,43 +59,69 @@ namespace Snake_Console
                 }
             } while (consoleKey.Key!=ConsoleKey.Escape);
         }
-        private static void Lose(object sender, Snake_Logic.Event_Args.LoseGameArgs LoseArg) {
-            plataform.PauseGame();
-            plataform = new Plataform(10, 10, 1500);
-            plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler((object sendeer, Snake_Logic.Event_Args.MoveSnakeArgs moveArgs) => {
-                Console.Clear();
-                for (int x = (-1); x < plataform.Height+2; x++)
-                {
-                    for (int y = (-1); y < plataform.Width+2; y++)
-                    {
-                        var px = plataform.GetContentInPoint(new Snake_Logic.Base.Point(x, y));
-                        switch (px)
-                        {
-                            case Snake_Logic.Enums.PointCotent.Null:
-                                Console.Write(".");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.Wall:
-                                Console.Write("W");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.Apple:
-                                Console.Write("A");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.SnakeBody:
-                                Console.Write("S");
-                                break;
-                            case Snake_Logic.Enums.PointCotent.SnakeHead:
-                                Console.Write("H");
-                                break;
-
-                        }
-                    }
-                    Console.WriteLine();
-                }
-            });
+        private static void Lose(object sender, LoseGameArgs LoseArg) {
+            plataform.Pause();
+            plataform = new Plataform(Width, Height, Velocity);
+            plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler(MoveSnake);
             plataform.LoseGame += new Plataform.LoseGameHandler(Lose);
-            Console.WriteLine("Lose Game!");
-           
-            plataform.PlayGame();
-        }  
+            for (int i = 0; i < rd.Next(0, Width / 2); i++)
+            {
+                plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+            }
+            plataform.Play();
+        }
+        private static void MoveSnake(object sendeer, MoveSnakeArgs moveArgs) {
+            Console.Clear();
+            for (int x = (-1); x < plataform.Height + 2; x++)
+            {
+                for (int y = (-1); y < plataform.Width + 2; y++)
+                {
+                    var px = plataform.GetContentInPoint(new Point(x, y));
+                    switch (px)
+                    {
+                        case PointCotent.Null:
+                            bool contain = false;
+                            foreach (var item in plataform.Objects)
+                            {
+                                if (item.Location.Equals(new Point(x, y)))
+                                {
+                                    switch (item.Type)
+                                    {
+                                        case ObjectType.Tree:
+                                            Console.Write("T");
+                                            break;
+                                        case ObjectType.Lake:
+                                            Console.Write("L");
+                                            break;
+                                        default:
+                                            Console.Write("??");
+                                            break;
+                                    }
+                                    contain = true;
+                                }
+                            }
+                            if (!contain)
+                            {
+                                Console.Write(".");
+                            }
+                            break;
+                        case PointCotent.Wall:
+                            Console.Write("W");
+                            break;
+                        case PointCotent.Apple:
+                            Console.Write("A");
+                            break;
+                        case PointCotent.SnakeBody:
+                            Console.Write("S");
+                            break;
+                        case PointCotent.SnakeHead:
+                            Console.Write("H");
+                            break;
+
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
     }
 }

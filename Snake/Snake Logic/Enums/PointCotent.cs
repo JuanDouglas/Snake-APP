@@ -6,6 +6,7 @@
         Wall = 1,
         Apple = 2,
         SnakeBody = 3,
-        SnakeHead = 4
+        SnakeHead = 4,
+        Object = 5
     }
 }

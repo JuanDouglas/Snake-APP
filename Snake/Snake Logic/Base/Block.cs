@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Snake_Logic.Enums;
+using Snake_Logic.Event_Args;
+using System;
 using System.Collections.Generic;
-using Snake_Logic.Enums;
 using System.Linq;
 
 namespace Snake_Logic.Base
@@ -26,6 +27,7 @@ namespace Snake_Logic.Base
         /// Posição no índicie.
         /// </summary>
         public Nullable<int> Index { get; set; }
+        public Plataform Plataform { get; private set; }
         /// <summary>
         /// Construtor de blocos secundários.
         /// </summary>
@@ -33,12 +35,13 @@ namespace Snake_Logic.Base
         /// <param name="direction">Direção inicial.</param>
         /// <param name="turnings">Viradas adicionadas ao bloco de anterior (índicie - 1).</param>
         /// <param name="index">Numéro no índicie.</param>
-        public Block(Point location, Direction direction, List<Turning> turnings, int index)
+        public Block(in Plataform plataform, Point location, Direction direction, List<Turning> turnings, int index)
         {
             Location = location;
             Direction = direction;
             Turnings = turnings ?? throw new ArgumentNullException(nameof(turnings));
             Index = index;
+            Plataform = plataform;
         }
         /// <summary>
         /// Construtor de bloco inicial.
@@ -46,12 +49,13 @@ namespace Snake_Logic.Base
         /// <param name="location">Local inicial.</param>
         /// <param name="direction">Direção inicial.</param>
         /// <param name="index">Numéro no índicie.</param>
-        public Block(Point location, Direction direction, int index)
+        public Block(in Plataform plataform, Point location, Direction direction, int index)
         {
             Location = location;
             Direction = direction;
             Index = index;
             Turnings = new List<Turning>();
+            Plataform = plataform ?? throw new ArgumentNullException(nameof(plataform));
         }
         /// <summary>
         /// Faz o movimento deste bloco de acordo com a direção, caso tenha uma curva ("Turning") adiciona faz a curva e muda a direção.
@@ -61,27 +65,27 @@ namespace Snake_Logic.Base
             var turning = Turnings.FirstOrDefault(fs => fs.Location.Equals(Location));
             if (turning != null)
             {
-                    Direction = turning.Direction;
-                    Turnings.RemoveAll(fs => fs.Location.Equals(Location));
-                    foreach (var item in Turnings)
-                    {
-                        item.Index--;
-                    }
-                
+                Direction = turning.Direction;
+                Turnings.RemoveAll(fs => fs.Location.Equals(Location));
+                foreach (var item in Turnings)
+                {
+                    item.Index--;
+                }
+
             }
             switch (Direction)
             {
                 case Direction.Down:
-                    this.Location = new Point(Location.X + 1, Location.Y);
+                    Location = new Point(Location.X + 1, Location.Y);
                     break;
                 case Direction.UP:
-                    this.Location = new Point(Location.X - 1, Location.Y);
+                    Location = new Point(Location.X - 1, Location.Y);
                     break;
                 case Direction.Left:
-                    this.Location = new Point(Location.X, Location.Y - 1);
+                    Location = new Point(Location.X, Location.Y - 1);
                     break;
                 case Direction.Right:
-                    this.Location = new Point(Location.X, Location.Y + 1);
+                    Location = new Point(Location.X, Location.Y + 1);
                     break;
             }
         }

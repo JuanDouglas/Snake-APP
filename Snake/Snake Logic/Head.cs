@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Snake_Logic.Exceptions;
+﻿using Snake_Logic.Base;
 using Snake_Logic.Enums;
-using Snake_Logic.Base;
-using System.Collections.Generic;
+using Snake_Logic.Event_Args;
+using Snake_Logic.Exceptions;
+using System.Linq;
 
 namespace Snake_Logic
 {
@@ -12,24 +12,23 @@ namespace Snake_Logic
         /// Cobra.
         /// </summary>
         public Snake Snake { get; private set; }
-        private Point location;
         /// <summary>
         /// Construtor da cabeça ("Head").
         /// </summary>
         /// <param name="snake">Cobra "dona" da cabeça.</param>
         /// <param name="location">Local incial</param>
         /// <param name="direction">Direção Incial</param>
-        public Head(Snake snake, Point locatin, Direction direction) : base(locatin, direction, 0)
+        public Head(in Snake snake, Point location, Direction direction) : base(snake.Plataform, location, direction, 0)
         {
             Snake = snake;
-            location = locatin;
         }
-        
+
         /// <summary>
         /// Move a cobra.
         /// </summary>
-        internal void MoveSnake() {
-            Point point = location;
+        internal void MoveSnake()
+        {
+            Point point = Location;
             var turning = Turnings.FirstOrDefault(fs => fs.Location.Equals(Location));
 
             if (turning != null)
@@ -59,11 +58,13 @@ namespace Snake_Logic
             switch (Snake.Plataform.GetContentInPoint(point))
             {
                 case PointCotent.Wall:
-                    throw new SnakeWallException();
+                    Plataform.LoseInvoke(this,new LoseGameArgs(PointCotent.Wall,Plataform.Snake.Legacy,Plataform.CollectedApples));
+                    break;
                 case PointCotent.Apple:
                     base.Move();
                     Apple apple = Snake.Plataform.GetApple(point);
-                    Snake.Plataform.CollectAppleInvoke(apple,new Event_Args.CollectAppleArgs(apple,apple.Power,Snake));
+                    Snake.SnakeUpgradeInvoke(apple, new SnakeUpgradeArgs(apple,Snake.Legacy.Value,Snake.Legacy.Value+apple.Power,Snake));
+                    Snake.Plataform.CollectAppleInvoke(apple, new CollectAppleArgs(apple, apple.Power, Snake));
                     foreach (var item in Snake.Blocks)
                     {
                         item.Move();
@@ -72,6 +73,17 @@ namespace Snake_Logic
                 case PointCotent.SnakeBody:
                     throw new SnakeBodyException();
                 default:
+                    foreach (var item in Plataform.Objects)
+                    {
+                        if (item.Location.Equals(point))
+                        {
+                            if (item.Content == ObjectContent.Solid)
+                            {
+                                Plataform.LoseInvoke(Plataform.Snake, new LoseGameArgs(item, Plataform.Snake.Legacy, Plataform.CollectedApples));
+                            }
+                            Plataform.ObjectInteractionInvoke(Plataform.Snake, new ObjectInteractionArgs(item, Plataform.Snake));
+                        }
+                    }
                     base.Move();
                     foreach (var item in Snake.Blocks)
                     {

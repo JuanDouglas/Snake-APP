@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Snake_Logic.Exceptions;
+﻿using Snake_Logic.Base;
 using Snake_Logic.Enums;
-using Snake_Logic.Base;
+using Snake_Logic.Event_Args;
 using System;
+using System.Collections.Generic;
 
 namespace Snake_Logic
 {
@@ -14,7 +14,7 @@ namespace Snake_Logic
         /// <summary>
         /// Tmanho Atual da cobra.
         /// </summary>
-        public Nullable<int> Legacy { get { return Blocks.Count+1; } }
+        public Nullable<int> Legacy { get { return Blocks.Count + 1; } }
         /// <summary>
         /// Blocos da cobra.
         /// </summary>
@@ -28,19 +28,25 @@ namespace Snake_Logic
         /// </summary>
         public Plataform Plataform { get; set; }
 
+        public delegate void SnakeUpgradeHandler(object sender, Snake_Logic.Event_Args.SnakeUpgradeArgs args);
+        public event SnakeUpgradeHandler SnakeUpprade;
+
         /// <summary>
         /// Construtor da cobra.
         /// </summary>
         /// <param name="plataform">Plataforma que a cobra irá ficar.</param>
         public Snake(Plataform plataform, Direction direction, Point location)
         {
-            if (plataform.Snake!=null)
+            if (plataform.Snake != null)
             {
                 throw new ArgumentException("There is already a snake on this platform.");
             }
-            Head = new Head(this,location,direction);
-            Blocks = new List<Block>();
             Plataform = plataform ?? throw new ArgumentNullException(nameof(plataform));
+            Head = new Head(this, location, direction);
+            Blocks = new List<Block>();
+            SnakeUpprade += new SnakeUpgradeHandler((object sender,SnakeUpgradeArgs args)=>{
+                _ = args;
+            });
         }
 
         /// <summary>
@@ -102,5 +108,8 @@ namespace Snake_Logic
             Head.MoveSnake();
         }
 
+        protected internal void SnakeUpgradeInvoke(object sender, SnakeUpgradeArgs args) {
+            SnakeUpprade.Invoke(sender, args);
+        }
     }
 }
