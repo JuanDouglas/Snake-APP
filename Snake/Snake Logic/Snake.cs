@@ -32,7 +32,7 @@ namespace Snake_Logic
         /// Construtor da cobra.
         /// </summary>
         /// <param name="plataform">Plataforma que a cobra irá ficar.</param>
-        public Snake(in Plataform plataform, Direction direction, Point location)
+        public Snake(Plataform plataform, Direction direction, Point location)
         {
             if (plataform.Snake!=null)
             {
@@ -48,26 +48,10 @@ namespace Snake_Logic
         /// </summary>
         public void MoveLeft()
         {
-            if (Head.Direction == Direction.Right)
+            Head.AddTuning(Direction.Left, Head.Location);
+            foreach (var item in Blocks)
             {
-                throw new TurningNotPossibleException("It is impossible to turn in the opposite direction like that.");
-            }
-            switch (Plataform.GetContentInPoint(new Point(Head.Location.X, Head.Location.Y - 1)))
-            {
-                case PointCotent.Null:
-                    Head.AddTuning(Direction.Left, Head.Location);
-                    foreach (var item in Blocks)
-                    {
-                        item.AddTuning(Direction.Left, Head.Location);
-                    }
-                    break;
-                case PointCotent.Wall:
-                    throw new SnakeWallException();
-                case PointCotent.Apple:
-
-                    break;
-                case PointCotent.SnakeBody:
-                    throw new SnakeBodyException();
+                item.AddTuning(Direction.Left, Head.Location);
             }
         }
         /// <summary>
@@ -75,26 +59,10 @@ namespace Snake_Logic
         /// </summary>
         public void MoveRight()
         {
-            if (Head.Direction == Direction.Left)
+            Head.AddTuning(Direction.Right, Head.Location);
+            foreach (var item in Blocks)
             {
-                throw new TurningNotPossibleException("It is impossible to turn in the opposite direction like that.");
-            }
-            switch (Plataform.GetContentInPoint(new Point(Head.Location.X, Head.Location.Y + 1)))
-            {
-                case PointCotent.Null:
-                    Head.AddTuning(Direction.Right, Head.Location);
-                    foreach (var item in Blocks)
-                    {
-                        item.AddTuning(Direction.Right, Head.Location);
-                    }
-                    break;
-                case PointCotent.Wall:
-                    throw new SnakeWallException();
-                case PointCotent.Apple:
-
-                    break;
-                case PointCotent.SnakeBody:
-                    throw new SnakeBodyException();
+                item.AddTuning(Direction.Right, Head.Location);
             }
         }
 
@@ -103,26 +71,10 @@ namespace Snake_Logic
         /// </summary>
         public void MoveUP()
         {
-            if (Head.Direction == Direction.Down)
+            Head.AddTuning(Direction.UP, Head.Location);
+            foreach (var item in Blocks)
             {
-                throw new TurningNotPossibleException("It is impossible to turn in the opposite direction like that.");
-            }
-            switch (Plataform.GetContentInPoint(new Point(Head.Location.X - 1, Head.Location.Y)))
-            {
-                case PointCotent.Null:
-                    Head.AddTuning(Direction.UP, Head.Location);
-                    foreach (var item in Blocks)
-                    {
-                        item.AddTuning(Direction.UP, Head.Location);
-                    }
-                    break;
-                case PointCotent.Wall:
-                    throw new SnakeWallException();
-                case PointCotent.Apple:
-
-                    break;
-                case PointCotent.SnakeBody:
-                    throw new SnakeBodyException();
+                item.AddTuning(Direction.UP, Head.Location);
             }
         }
 
@@ -132,26 +84,10 @@ namespace Snake_Logic
         /// </summary>
         public void MoveDown()
         {
-            if (Head.Direction == Direction.UP)
+            Head.AddTuning(Direction.Down, Head.Location);
+            foreach (var item in Blocks)
             {
-                throw new TurningNotPossibleException("It is impossible to turn in the opposite direction like that.");
-            }
-            switch (Plataform.GetContentInPoint(new Point(Head.Location.X + 1, Head.Location.Y )))
-            {
-                case PointCotent.Null:
-                    Head.AddTuning(Direction.Down, Head.Location);
-                    foreach (var item in Blocks)
-                    {
-                        item.AddTuning(Direction.Down, Head.Location);
-                    }
-                    break;
-                case PointCotent.Wall:
-                    throw new SnakeWallException();
-                case PointCotent.Apple:
-
-                    break;
-                case PointCotent.SnakeBody:
-                    throw new SnakeBodyException();
+                item.AddTuning(Direction.Down, Head.Location);
             }
         }
         /// <summary>

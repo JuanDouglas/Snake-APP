@@ -101,6 +101,7 @@ namespace Snake_Console
             });
             plataform.LoseGame += new Plataform.LoseGameHandler(Lose);
             Console.WriteLine("Lose Game!");
+           
             plataform.PlayGame();
         }  
     }

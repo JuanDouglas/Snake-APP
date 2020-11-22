@@ -2,6 +2,7 @@
 using Snake_Logic.Exceptions;
 using Snake_Logic.Enums;
 using Snake_Logic.Base;
+using System.Collections.Generic;
 
 namespace Snake_Logic
 {
@@ -18,7 +19,7 @@ namespace Snake_Logic
         /// <param name="snake">Cobra "dona" da cabeça.</param>
         /// <param name="location">Local incial</param>
         /// <param name="direction">Direção Incial</param>
-        public Head(in Snake snake, Point locatin, Direction direction) : base(locatin, direction, 0)
+        public Head(Snake snake, Point locatin, Direction direction) : base(locatin, direction, 0)
         {
             Snake = snake;
             location = locatin;
@@ -29,11 +30,14 @@ namespace Snake_Logic
         /// </summary>
         internal void MoveSnake() {
             Point point = location;
-            Point previosPoint = new Point();
-            int index = GetBlockIndex();
-            Direction previosDirection;
-            Block previos;
-
+            var turning = Turnings.FirstOrDefault(fs => fs.Index == 1);
+            if (turning != null)
+            {
+                if (turning.Location.Equals(Location))
+                {
+                    Direction = turning.Direction;
+                }
+            }
             switch (Direction)
             {
                 case Direction.Down:
@@ -49,6 +53,7 @@ namespace Snake_Logic
                     point = new Point(Location.X, Location.Y + 1);
                     break;
             }
+
             switch (Snake.Plataform.GetContentInPoint(point))
             {
                 case PointCotent.Null:
@@ -61,35 +66,9 @@ namespace Snake_Logic
                 case PointCotent.Wall:
                     throw new SnakeWallException();
                 case PointCotent.Apple:
+                    base.Move();
                     Apple apple = Snake.Plataform.GetApple(point);
                     Snake.Plataform.CollectAppleInvoke(apple,new Event_Args.CollectAppleArgs(apple,apple.Power,Snake));
-
-                    for (int i = 0; i < apple.Power; i++)
-                    {
-                        previos = Snake.Blocks.FirstOrDefault(fs => fs.Index.Value == index);
-                        if (previos == null)
-                        {
-                            previos = Snake.Head;
-                        }
-                        previosDirection = previos.Direction;
-                        switch (previosDirection)
-                        {
-                            case Direction.Down:
-                                previosPoint = new Point(previos.Location.X-1,previos.Location.Y);
-                                break;
-                            case Direction.UP:
-                                previosPoint = new Point(previos.Location.X + 1, previos.Location.Y);
-                                break;
-                            case Direction.Left:
-                                previosPoint = new Point(previos.Location.X, previos.Location.Y+1);
-                                break;
-                            case Direction.Right:
-                                previosPoint = new Point(previos.Location.X, previos.Location.Y-1);
-                                break;
-                        }
-                        Snake.Blocks.Add(new Block(previosPoint,previos.Direction,previos.Turnings,index));
-                    }
-                    base.Move();
                     foreach (var item in Snake.Blocks)
                     {
                         item.Move();
@@ -99,20 +78,6 @@ namespace Snake_Logic
                     throw new SnakeBodyException();
             }
         }
-        /// <summary>
-        /// Obtém o índicie do proxímo bloco.
-        /// </summary>
-        /// <returns>Retorna o valor do índicie.</returns>
-        private int GetBlockIndex() {
-            int max = 1;
-            foreach (var item in Snake.Blocks)
-            {
-                if (item.Index > max)
-                {
-                    max = item.Index.Value;
-                }
-            }
-            return max;
-        }
+
     }
 }

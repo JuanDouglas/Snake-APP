@@ -64,7 +64,7 @@ namespace Snake_Logic.Base
                 if (turning.Location.Equals(Location))
                 {
                     Direction = turning.Direction;
-                    Turnings.RemoveAll(fs => fs.Index == 1);
+                    Turnings.RemoveAll(fs => fs.Location.Equals(turning.Location));
                     foreach (var item in Turnings)
                     {
                         item.Index--;
@@ -74,16 +74,16 @@ namespace Snake_Logic.Base
             switch (Direction)
             {
                 case Direction.Down:
-                    Location = new Point(Location.X + 1, Location.Y);
+                    this.Location = new Point(Location.X + 1, Location.Y);
                     break;
                 case Direction.UP:
-                    Location = new Point(Location.X - 1, Location.Y);
+                    this.Location = new Point(Location.X - 1, Location.Y);
                     break;
                 case Direction.Left:
-                    Location = new Point(Location.X, Location.Y - 1);
+                    this.Location = new Point(Location.X, Location.Y - 1);
                     break;
                 case Direction.Right:
-                    Location = new Point(Location.X, Location.Y + 1);
+                    this.Location = new Point(Location.X, Location.Y + 1);
                     break;
             }
         }
@@ -94,7 +94,7 @@ namespace Snake_Logic.Base
         /// <param name="location">Local da curva</param>
         public void AddTuning(Direction direction, Point location)
         {
-            Turnings.Add(new Turning(direction, location, Turnings.Count + 1));
+            Turnings.Add(new Turning(direction, location, Turnings.Count));
         }
     }
 }
