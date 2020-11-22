@@ -123,22 +123,27 @@ namespace Snake_Logic
             {
                 return PointCotent.Wall;
             }
+
             if (point.X < 0)
             {
                 return PointCotent.Wall;
             }
+
             if (point.Y > Height)
             {
                 return PointCotent.Wall;
             }
+
             if (point.Y < 0)
             {
                 return PointCotent.Wall;
             }
+
             if (Snake.Head.Location.Equals(point))
             {
-                return PointCotent.SnakeBody;
+                return PointCotent.SnakeHead;
             }
+
             foreach (var item in Snake.Blocks)
             {
                 if (item.Location.Equals(point))

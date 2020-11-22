@@ -48,10 +48,11 @@ namespace Snake_Logic
         /// </summary>
         public void MoveLeft()
         {
-            Head.AddTuning(Direction.Left, Head.Location);
+            Point location = Head.Location;
+            Head.AddTuning(Direction.Left, location);
             foreach (var item in Blocks)
             {
-                item.AddTuning(Direction.Left, Head.Location);
+                item.AddTuning(Direction.Left, location);
             }
         }
         /// <summary>
@@ -59,10 +60,11 @@ namespace Snake_Logic
         /// </summary>
         public void MoveRight()
         {
-            Head.AddTuning(Direction.Right, Head.Location);
+            Point location = Head.Location;
+            Head.AddTuning(Direction.Right, location);
             foreach (var item in Blocks)
             {
-                item.AddTuning(Direction.Right, Head.Location);
+                item.AddTuning(Direction.Right, location);
             }
         }
 
@@ -71,10 +73,11 @@ namespace Snake_Logic
         /// </summary>
         public void MoveUP()
         {
-            Head.AddTuning(Direction.UP, Head.Location);
+            Point location = Head.Location;
+            Head.AddTuning(Direction.UP, location);
             foreach (var item in Blocks)
             {
-                item.AddTuning(Direction.UP, Head.Location);
+                item.AddTuning(Direction.UP, location);
             }
         }
 
@@ -84,10 +87,11 @@ namespace Snake_Logic
         /// </summary>
         public void MoveDown()
         {
-            Head.AddTuning(Direction.Down, Head.Location);
+            Point location = Head.Location;
+            Head.AddTuning(Direction.Down, location);
             foreach (var item in Blocks)
             {
-                item.AddTuning(Direction.Down, Head.Location);
+                item.AddTuning(Direction.Down, location);
             }
         }
         /// <summary>

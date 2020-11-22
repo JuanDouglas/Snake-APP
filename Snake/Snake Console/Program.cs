@@ -14,9 +14,9 @@ namespace Snake_Console
            plataform = new Plataform(10,10,1500);
             plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler((object sender,Snake_Logic.Event_Args.MoveSnakeArgs moveArgs)=> {
                 Console.Clear();
-                for (int x = (-1); x < plataform.Width+1; x++)
+                for (int x = (-1); x < plataform.Width+2; x++)
                 {
-                    for (int y = (-1); y < plataform.Height+1; y++)
+                    for (int y = (-1); y < plataform.Height+2; y++)
                     {
                         var px = plataform.GetContentInPoint(new Snake_Logic.Base.Point(x,y));
                         switch (px)
@@ -32,6 +32,9 @@ namespace Snake_Console
                                 break;
                             case Snake_Logic.Enums.PointCotent.SnakeBody:
                                 Console.Write("S");
+                                break;
+                            case Snake_Logic.Enums.PointCotent.SnakeHead:
+                                Console.Write("H");
                                 break;
                         }
                     }
@@ -75,9 +78,9 @@ namespace Snake_Console
             plataform = new Plataform(10, 10, 1500);
             plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler((object sendeer, Snake_Logic.Event_Args.MoveSnakeArgs moveArgs) => {
                 Console.Clear();
-                for (int x = (-1); x < plataform.Height+1; x++)
+                for (int x = (-1); x < plataform.Height+2; x++)
                 {
-                    for (int y = (-1); y < plataform.Width+1; y++)
+                    for (int y = (-1); y < plataform.Width+2; y++)
                     {
                         var px = plataform.GetContentInPoint(new Snake_Logic.Base.Point(x, y));
                         switch (px)
@@ -94,6 +97,10 @@ namespace Snake_Console
                             case Snake_Logic.Enums.PointCotent.SnakeBody:
                                 Console.Write("S");
                                 break;
+                            case Snake_Logic.Enums.PointCotent.SnakeHead:
+                                Console.Write("H");
+                                break;
+
                         }
                     }
                     Console.WriteLine();

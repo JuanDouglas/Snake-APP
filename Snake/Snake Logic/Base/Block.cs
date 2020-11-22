@@ -58,18 +58,16 @@ namespace Snake_Logic.Base
         /// </summary>
         protected internal virtual void Move()
         {
-            var turning = Turnings.FirstOrDefault(fs => fs.Index == 1);
+            var turning = Turnings.FirstOrDefault(fs => fs.Location.Equals(Location));
             if (turning != null)
             {
-                if (turning.Location.Equals(Location))
-                {
                     Direction = turning.Direction;
-                    Turnings.RemoveAll(fs => fs.Location.Equals(turning.Location));
+                    Turnings.RemoveAll(fs => fs.Location.Equals(Location));
                     foreach (var item in Turnings)
                     {
                         item.Index--;
                     }
-                }
+                
             }
             switch (Direction)
             {

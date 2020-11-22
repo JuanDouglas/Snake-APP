@@ -30,7 +30,8 @@ namespace Snake_Logic
         /// </summary>
         internal void MoveSnake() {
             Point point = location;
-            var turning = Turnings.FirstOrDefault(fs => fs.Index == 1);
+            var turning = Turnings.FirstOrDefault(fs => fs.Location.Equals(Location));
+
             if (turning != null)
             {
                 if (turning.Location.Equals(Location))
@@ -38,6 +39,7 @@ namespace Snake_Logic
                     Direction = turning.Direction;
                 }
             }
+
             switch (Direction)
             {
                 case Direction.Down:
@@ -56,13 +58,6 @@ namespace Snake_Logic
 
             switch (Snake.Plataform.GetContentInPoint(point))
             {
-                case PointCotent.Null:
-                    base.Move();
-                    foreach (var item in Snake.Blocks)
-                    {
-                        item.Move();
-                    }
-                    break;
                 case PointCotent.Wall:
                     throw new SnakeWallException();
                 case PointCotent.Apple:
@@ -76,6 +71,13 @@ namespace Snake_Logic
                     break;
                 case PointCotent.SnakeBody:
                     throw new SnakeBodyException();
+                default:
+                    base.Move();
+                    foreach (var item in Snake.Blocks)
+                    {
+                        item.Move();
+                    }
+                    break;
             }
         }
 

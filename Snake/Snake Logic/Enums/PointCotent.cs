@@ -1,9 +1,11 @@
 ﻿namespace Snake_Logic.Enums
 {
-    public enum PointCotent : int { 
-    Null,
-    Wall,
-    Apple,
-    SnakeBody
+    public enum PointCotent : int
+    {
+        Null = 0,
+        Wall = 1,
+        Apple = 2,
+        SnakeBody = 3,
+        SnakeHead = 4
     }
 }
