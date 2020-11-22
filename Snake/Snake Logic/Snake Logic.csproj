@@ -41,8 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Apple.cs" />
+    <Compile Include="Base\Block.cs" />
+    <Compile Include="Enums\Direction.cs" />
+    <Compile Include="Head.cs" />
+    <Compile Include="Plataform.cs" />
+    <Compile Include="Enums\PointCotent.cs" />
+    <Compile Include="Base\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Exceptions\SnakeBodyException.cs" />
+    <Compile Include="Exceptions\SnakeWallException.cs" />
+    <Compile Include="Exceptions\TurningNotPossibleException.cs" />
+    <Compile Include="Base\Turning.cs" />
+    <Compile Include="Snake.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

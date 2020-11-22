@@ -38,7 +38,7 @@ namespace Snake_App
             {
                 return true;
             }
-
+            
             return base.OnOptionsItemSelected(item);
         }
 
