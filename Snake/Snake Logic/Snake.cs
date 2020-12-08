@@ -1,10 +1,10 @@
-﻿using Snake_Logic.Base;
-using Snake_Logic.Enums;
-using Snake_Logic.Event_Args;
+﻿using Snake.Logic.Base;
+using Snake.Logic.Enums;
+using Snake.Logic.Event_Args;
 using System;
 using System.Collections.Generic;
 
-namespace Snake_Logic
+namespace Snake.Logic
 {
     /// <summary>
     /// Cobra do Jogo.
@@ -28,7 +28,7 @@ namespace Snake_Logic
         /// </summary>
         public Plataform Plataform { get; set; }
 
-        public delegate void SnakeUpgradeHandler(object sender, Snake_Logic.Event_Args.SnakeUpgradeArgs args);
+        public delegate void SnakeUpgradeHandler(object sender, SnakeUpgradeArgs args);
         public event SnakeUpgradeHandler SnakeUpprade;
 
         /// <summary>

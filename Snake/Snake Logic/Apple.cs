@@ -1,6 +1,6 @@
-﻿using Snake_Logic.Base;
+﻿using Snake.Logic.Base;
 
-namespace Snake_Logic
+namespace Snake.Logic
 {
     /// <summary>
     /// Maçâ do jogo.

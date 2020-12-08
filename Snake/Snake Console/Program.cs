@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake_Logic;
-using Snake_Logic.Base;
-using Snake_Logic.Enums;
-using Snake_Logic.Event_Args;
+using Snake.Logic;
+using Snake.Logic.Base;
+using Snake.Logic.Enums;
+using Snake.Logic.Event_Args;
+using Snake.Logic.Graphic;
 
 namespace Snake_Console
 {
@@ -27,7 +28,8 @@ namespace Snake_Console
             {
                 plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
-            
+            Background background= new Background(plataform);
+            background.GetImage().Save("C:\\Users\\juand\\Downloads\\Teste.jpeg");
             plataform.Play();
             ConsoleKeyInfo consoleKey;
             do

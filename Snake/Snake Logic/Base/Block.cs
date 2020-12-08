@@ -1,9 +1,9 @@
-﻿using Snake_Logic.Enums;
+﻿using Snake.Logic.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Snake_Logic.Base
+namespace Snake.Logic.Base
 {
     /// <summary>
     /// Bloco da cobra.

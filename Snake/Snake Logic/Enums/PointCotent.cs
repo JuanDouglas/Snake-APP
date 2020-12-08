@@ -1,4 +1,4 @@
-﻿namespace Snake_Logic.Enums
+﻿namespace Snake.Logic.Enums
 {
     public enum PointCotent : int
     {

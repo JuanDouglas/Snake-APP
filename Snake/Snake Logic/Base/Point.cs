@@ -1,4 +1,4 @@
-﻿namespace Snake_Logic.Base
+﻿namespace Snake.Logic.Base
 {
     /// <summary>
     /// Ponto em plano 2D.

@@ -1,12 +1,12 @@
-﻿using Snake_Logic.Base;
-using Snake_Logic.Enums;
-using Snake_Logic.Event_Args;
+﻿using Snake.Logic.Base;
+using Snake.Logic.Enums;
+using Snake.Logic.Event_Args;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 
-namespace Snake_Logic
+namespace Snake.Logic
 {
     /// <summary>
     /// Plataforma de jogo.

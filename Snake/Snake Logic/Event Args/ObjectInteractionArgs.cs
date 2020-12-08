@@ -1,8 +1,8 @@
-﻿using Snake_Logic.Base;
-using Snake_Logic.Enums;
+﻿using Snake.Logic.Base;
+using Snake.Logic.Enums;
 using System;
 
-namespace Snake_Logic.Event_Args
+namespace Snake.Logic.Event_Args
 {
     public class ObjectInteractionArgs
     {

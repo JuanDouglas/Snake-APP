@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Snake_Console</RootNamespace>
     <AssemblyName>Snake Console</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +55,10 @@
     <ProjectReference Include="..\Snake Logic\Snake Logic.csproj">
       <Project>{5fe3d2c8-6345-48a0-ac84-060900041e2b}</Project>
       <Name>Snake Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snakea.Logic.Graphic\Snake.Logic.Graphic.csproj">
+      <Project>{5c5d91ad-42a7-4ed0-8f2a-e0a86a6379de}</Project>
+      <Name>Snake.Logic.Graphic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

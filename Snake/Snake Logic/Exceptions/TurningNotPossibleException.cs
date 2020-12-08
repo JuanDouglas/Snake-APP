@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snake_Logic.Exceptions
+namespace Snake.Logic.Exceptions
 {
     [Serializable]
     public class TurningNotPossibleException : Exception

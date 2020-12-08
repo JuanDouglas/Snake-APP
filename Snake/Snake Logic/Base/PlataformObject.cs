@@ -1,6 +1,6 @@
-﻿using Snake_Logic.Enums;
+﻿using Snake.Logic.Enums;
 
-namespace Snake_Logic.Base
+namespace Snake.Logic.Base
 {
     public class PlataformObject
     {

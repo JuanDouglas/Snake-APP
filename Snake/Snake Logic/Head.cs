@@ -1,10 +1,10 @@
-﻿using Snake_Logic.Base;
-using Snake_Logic.Enums;
-using Snake_Logic.Event_Args;
-using Snake_Logic.Exceptions;
+﻿using Snake.Logic.Base;
+using Snake.Logic.Enums;
+using Snake.Logic.Event_Args;
+using Snake.Logic.Exceptions;
 using System.Linq;
 
-namespace Snake_Logic
+namespace Snake.Logic
 {
     public class Head : Block
     {

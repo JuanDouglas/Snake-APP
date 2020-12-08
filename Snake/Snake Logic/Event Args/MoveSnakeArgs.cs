@@ -1,6 +1,6 @@
-﻿namespace Snake_Logic.Event_Args
+﻿namespace Snake.Logic.Event_Args
 {
-    public class MoveSnakeArgs
+    public partial class MoveSnakeArgs
     {
     }
 }
