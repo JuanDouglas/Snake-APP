@@ -9,15 +9,22 @@ namespace Snake.Logic.Base
 {
     public class ObjectsManager :  IList<PlataformObject>
     {
-        public PlataformObject this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private List<PlataformObject> plataformObjects;
+        public PlataformObject this[int index] { get => plataformObjects[index]; set => plataformObjects[index] = value; }
+        public PlataformObject this[Guid id] { get => plataformObjects.FirstOrDefault(fs=>fs.ID.Equals(id)); set => plataformObjects[PositionByID(id)] = value; }
 
-        public int Count => throw new NotImplementedException();
+
+        public ObjectsManager() {
+            plataformObjects = new List<PlataformObject>();
+        }
+
+        public int Count => plataformObjects.Count;
 
         public bool IsReadOnly => throw new NotImplementedException();
 
         public void Add(PlataformObject item)
         {
-            throw new NotImplementedException();
+            plataformObjects.Add(item);
         }
 
         public void Clear()
@@ -32,7 +39,7 @@ namespace Snake.Logic.Base
 
         public void CopyTo(PlataformObject[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            plataformObjects.CopyTo(array,arrayIndex);
         }
 
         public IEnumerator GetEnumerator()
@@ -40,6 +47,16 @@ namespace Snake.Logic.Base
             throw new NotImplementedException();
         }
 
+        private int PositionByID(Guid id) {
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (this[i].ID.Equals(id))
+                {
+                    return i-1;
+                }
+            }
+            return 0;
+        }
         public int IndexOf(PlataformObject item)
         {
             throw new NotImplementedException();
@@ -52,7 +69,11 @@ namespace Snake.Logic.Base
 
         public bool Remove(PlataformObject item)
         {
-            throw new NotImplementedException();
+            if (plataformObjects.RemoveAll(re => re.ID == item.ID)>=1)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void RemoveAt(int index)
@@ -62,7 +83,7 @@ namespace Snake.Logic.Base
 
         IEnumerator<PlataformObject> IEnumerable<PlataformObject>.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return plataformObjects.GetEnumerator();
         }
     }
 }

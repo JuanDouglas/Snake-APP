@@ -13,8 +13,6 @@ namespace Snake.Logic
     /// </summary>
     public class Plataform
     {
-
-
         /// <summary>
         /// Largura da Plataforma.
         /// </summary>
@@ -45,13 +43,53 @@ namespace Snake.Logic
         /// <summary>
         /// Cobra do jogo.
         /// </summary>
-        public Snake Snake { get => Objects.FirstOrDefault(fs=>fs.Type==ObjectType.S); set; }
+        public Snake Snake
+        {
+            get => (Snake)Objects.FirstOrDefault(fs => fs.Type == ObjectType.Snake);
+            set
+            {
+                if (Objects.FirstOrDefault(fs=>fs.Type==ObjectType.Snake)!=null)
+                {
+                    Objects[value.ID] = value;
+                }
+                else
+                {
+                    Objects.Add(value);
+                }
+            }
+        }
 
 
         /// <summary>
         /// Maçãs da plataforma.
         /// </summary>
-        public List<Apple> Apples { get; set; }
+        public List<Apple> Apples
+        {
+            get
+            {
+                List<PlataformObject> plataformObjects = Objects.Where(wh => wh.Type == ObjectType.Apple).ToList();
+                List<Apple> apples = new List<Apple>();
+                foreach (var item in plataformObjects)
+                {
+                    apples.Add((Apple)item);
+                }
+                return apples;
+            }
+            set
+            {
+                foreach (var item in value)
+                {
+                    if (Objects.FirstOrDefault(fs => fs.Type == ObjectType.Snake) != null)
+                    {
+                        Objects[item.ID] = item;
+                    }
+                    else
+                    {
+                        Objects.Add(item);
+                    }
+                } 
+            }
+        }
         /// <summary>
         /// "Poder" das Maçãs (quando irá adicionar no tamanho da cobbra).
         /// </summary>
@@ -107,17 +145,8 @@ namespace Snake.Logic
         /// <param name="width">Largura da Plataforma.</param>
         /// <param name="height">Altura da Plataforma.</param>
         /// <param name="velocity">Velocidade do jogo.</param>
-        public Plataform(int width, int height, int velocity)
+        public Plataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
         {
-            Width = width;
-            Height = height;
-            Velocity = velocity;
-            ApplePower = 2;
-            CollectedApples = 1;
-            MaxApples = 2;
-            AppleDeacreaseSpeed = 200;
-            Objects = new List<PlataformObject>();
-            CreatePlataform(Direction.Right, new Point(Width / 2, Height / 2));
         }
         /// <summary>
         /// Construtor da Plataforma.
@@ -127,7 +156,7 @@ namespace Snake.Logic
         /// <param name="velocity">Velocidade do jogo.</param>
         /// <param name="snake_direction">Direção inicial do cobra na Plataforma.</param>
         /// <param name="snake_point">Localização incial da cobra na Plataforma.</param>
-        public Plataform(int width, int height, int velocity, Direction snake_direction, Point snake_point)
+        public Plataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
         {
             Width = width;
             Height = height;
@@ -136,8 +165,12 @@ namespace Snake.Logic
             CollectedApples = 1;
             MaxApples = 2;
             AppleDeacreaseSpeed = 200;
-            Objects = new List<PlataformObject>();
+            Objects = new ObjectsManager();
             CreatePlataform(snake_direction, snake_point);
+            for (int i = 0; i < apples; i++)
+            {
+                Objects.Add(new Apple(new Point(rd.Next(Width), rd.Next(Height)),ApplePower,AppleDeacreaseSpeed));
+            }
         }
 
         /// <summary>
@@ -271,7 +304,6 @@ namespace Snake.Logic
         }
         private void CreatePlataform(Direction snake_direction, Point snake_point)
         {
-            Apples = new List<Apple>();
             Snake = new Snake(this, snake_direction, snake_point);
             rd = new Random();
             for (int i = 0; i < MaxApples; i++)
@@ -330,14 +362,14 @@ namespace Snake.Logic
                     SnakeBlock block = new SnakeBlock(previos.Plataform, previosPoint, previos.Direction, newTurn, index);
                     Snake.Blocks.Add(block);
                 }
-                Apples.RemoveAll(remove => remove.Location.Equals(args.Apple.Location));
+                Objects.Remove(apple);
                 Snake.Plataform.CollectedApples++;
                 if (MoveTimer.Interval >= AppleDeacreaseSpeed)
                 {
                     MoveTimer.Interval -= AppleDeacreaseSpeed;
                 }
 
-                Apples.Add(new Apple(
+                Objects.Add(new Apple(
                     new Point(
                         rd.Next(0, Width),
                         rd.Next(0, Height)),

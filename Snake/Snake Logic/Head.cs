@@ -73,7 +73,7 @@ namespace Snake.Logic
                 case PointCotent.SnakeBody:
                     throw new SnakeBodyException();
                 default:
-                    foreach (var item in Plataform.Objects)
+                    foreach (var item in Plataform.Objects.ToArray())
                     {
                         if (item.Location.Equals(point))
                         {

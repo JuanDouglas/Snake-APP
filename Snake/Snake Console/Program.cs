@@ -26,7 +26,7 @@ namespace Snake_Console
             plataform.LoseGame += new Plataform.LoseGameHandler(Lose);
             for (int i = 0; i < rd.Next(0,Width/2); i++)
             {
-                plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+                plataform.Objects.Add(new DefaultObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
             Background background= new Background(in plataform, 800, 800);
             background.GetImage().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
@@ -66,10 +66,10 @@ namespace Snake_Console
             plataform = new Plataform(Width, Height, Velocity);
             plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler(MoveSnake);
             plataform.LoseGame += new Plataform.LoseGameHandler(Lose);
-            for (int i = 0; i < rd.Next(0, Width / 2); i++)
-            {
-                plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
-            }
+            //for (int i = 0; i < rd.Next(0, Width / 2); i++)
+            //{
+            //    plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+            //}
             plataform.Play();
         }
         private static void MoveSnake(object sendeer, MoveSnakeArgs moveArgs) {
@@ -83,7 +83,7 @@ namespace Snake_Console
                     {
                         case PointCotent.Null:
                             bool contain = false;
-                            foreach (var item in plataform.Objects)
+                            foreach (var item in plataform.Objects.ToArray())
                             {
                                 if (item.Location.Equals(new Point(x, y)))
                                 {
