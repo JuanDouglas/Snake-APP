@@ -26,7 +26,7 @@ namespace Snake.Logic.Base
         /// Posição no índicie.
         /// </summary>
         public Nullable<int> Index { get; set; }
-        public Plataform Plataform { get; private set; }
+        public GamePlataform Plataform { get; private set; }
         /// <summary>
         /// Construtor de blocos secundários.
         /// </summary>
@@ -34,7 +34,7 @@ namespace Snake.Logic.Base
         /// <param name="direction">Direção inicial.</param>
         /// <param name="turnings">Viradas adicionadas ao bloco de anterior (índicie - 1).</param>
         /// <param name="index">Numéro no índicie.</param>
-        public SnakeBlock(in Plataform plataform, Point location, Direction direction, List<Turning> turnings, int index)
+        public SnakeBlock(in GamePlataform plataform, Point location, Direction direction, List<Turning> turnings, int index)
         {
             Location = location;
             Direction = direction;
@@ -48,7 +48,7 @@ namespace Snake.Logic.Base
         /// <param name="location">Local inicial.</param>
         /// <param name="direction">Direção inicial.</param>
         /// <param name="index">Numéro no índicie.</param>
-        public SnakeBlock(in Plataform plataform, Point location, Direction direction, int index)
+        public SnakeBlock(in GamePlataform plataform, Point location, Direction direction, int index)
         {
             Location = location;
             Direction = direction;

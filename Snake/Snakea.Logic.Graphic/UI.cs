@@ -13,14 +13,15 @@ namespace Snake.Logic.Graphic
 
         public delegate void DrawUIHandler(object sender, DrawUIArgs args);
         public event DrawUIHandler DrawUI;
+        public GamePlataform Plataform { get; set; }
 
-        public UI(in Plataform plataform, int width, int height) {
+        public UI(in GamePlataform plataform, int width, int height) {
             Background = new Background(plataform,width,height);
-            
+            Plataform = plataform;
         }
 
         private Image Draw(GraphicObject[] graphicObjects) {
-
+            
             throw new NotImplementedException();
         }
     }

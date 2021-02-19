@@ -11,21 +11,21 @@ namespace Snake.Logic
     /// <summary>
     /// Plataforma de jogo.
     /// </summary>
-    public class Plataform
+    public abstract class GamePlataform
     {
         /// <summary>
         /// Largura da Plataforma.
         /// </summary>
-        public int Width { get; set; }
+        public virtual int Width { get; set; }
         /// <summary>
         /// Altura da Plataforma.
         /// </summary>
-        public int Height { get; set; }
+        public virtual int Height { get; set; }
         /// <summary>
         /// Velocidade do jogo.
         /// </summary>
         /// 
-        public int Velocity
+        public virtual int Velocity
         {
             get
             {
@@ -39,11 +39,11 @@ namespace Snake.Logic
         }
         private int _Velocity;
 
-        public ObjectsManager Objects { get; set; }
+        public virtual ObjectsManager Objects { get; set; }
         /// <summary>
         /// Cobra do jogo.
         /// </summary>
-        public Snake Snake
+        public virtual Snake Snake
         {
             get => (Snake)Objects.FirstOrDefault(fs => fs.Type == ObjectType.Snake);
             set
@@ -63,7 +63,7 @@ namespace Snake.Logic
         /// <summary>
         /// Maçãs da plataforma.
         /// </summary>
-        public List<Apple> Apples
+        public virtual List<Apple> Apples
         {
             get
             {
@@ -93,23 +93,23 @@ namespace Snake.Logic
         /// <summary>
         /// "Poder" das Maçãs (quando irá adicionar no tamanho da cobbra).
         /// </summary>
-        public int ApplePower { get; set; }
+        public virtual int ApplePower { get; set; }
         /// <summary>
         /// Thread responsável pelo movimento da cobra na Plataforma.
         /// </summary>
-        public Timer MoveTimer { get; private set; }
+        public virtual Timer MoveTimer { get; private set; }
         /// <summary>
         /// Quantidade de Maçãs coletadas.
         /// </summary>
-        public Nullable<int> CollectedApples { get; protected internal set; }
+        public virtual Nullable<int> CollectedApples { get; protected internal set; }
         /// <summary>
         /// Maxímo de Maçãs na Plataforma.
         /// </summary>
-        public int MaxApples { get; set; }
+        public virtual int MaxApples { get; set; }
         /// <summary>
         /// Objetos distintos na Plataforma.
         /// </summary>
-        public int AppleDeacreaseSpeed { get; set; }
+        public virtual int AppleDeacreaseSpeed { get; set; }
         private Random rd;
 
         public delegate void MoveSnakeEventHandler(object sender, MoveSnakeArgs args);
@@ -136,7 +136,7 @@ namespace Snake.Logic
         /// </summary>
         public event ObjectInteractionHandler ObjectInteraction;
 
-        public delegate void UpdateViewHandler(object sender, Plataform plataform);
+        public delegate void UpdateViewHandler(object sender, GamePlataform plataform);
         public event UpdateViewHandler UpdateView;
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Snake.Logic
         /// <param name="width">Largura da Plataforma.</param>
         /// <param name="height">Altura da Plataforma.</param>
         /// <param name="velocity">Velocidade do jogo.</param>
-        public Plataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
+        public GamePlataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
         {
         }
         /// <summary>
@@ -156,7 +156,7 @@ namespace Snake.Logic
         /// <param name="velocity">Velocidade do jogo.</param>
         /// <param name="snake_direction">Direção inicial do cobra na Plataforma.</param>
         /// <param name="snake_point">Localização incial da cobra na Plataforma.</param>
-        public Plataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
+        public GamePlataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
         {
             Width = width;
             Height = height;
@@ -178,7 +178,7 @@ namespace Snake.Logic
         /// </summary>
         /// <param name="point">Localização na Plataforma.</param>
         /// <returns>Retorna a enumeração do contéudo neste ponto.</returns>
-        public PointCotent GetContentInPoint(Point point)
+        public virtual PointCotent GetContentInPoint(Point point)
         {
             if (point.X > Width)
             {
@@ -228,7 +228,7 @@ namespace Snake.Logic
         /// </summary>
         /// <param name="location">Localização na Plataforma.</param>
         /// <returns>Maçã</returns>
-        public Apple GetApple(Point location)
+        public virtual Apple GetApple(Point location)
         {
             foreach (var item in Apples)
             {
@@ -243,7 +243,7 @@ namespace Snake.Logic
         /// <summary>
         /// Incia o Timer da Plataforma.
         /// </summary>
-        public void Play()
+        public virtual void Play()
         {
             MoveTimer.Start();
         }
@@ -251,7 +251,7 @@ namespace Snake.Logic
         /// <summary>
         /// Pausa o Timer da Plataforma.
         /// </summary>
-        public void Pause()
+        public virtual void Pause()
         {
             MoveTimer.Stop();
         }
@@ -259,25 +259,25 @@ namespace Snake.Logic
         /// <summary>
         /// Re-instâcia todos os objetos.
         /// </summary>
-        public void Restart(Direction snake_direction, Point snake_point)
+        protected internal virtual void Restart(Direction snake_direction, Point snake_point)
         {
             MoveTimer.Stop();
             CreatePlataform(snake_direction, snake_point);
             MoveTimer.Start();
         }
-        protected internal void LoseInvoke(object sender, LoseGameArgs args)
+         protected internal virtual void LoseInvoke(object sender, LoseGameArgs args)
         {
             LoseGame.Invoke(sender, args);
         }
-        protected internal void ObjectInteractionInvoke(object sender, ObjectInteractionArgs args)
+        protected internal virtual void ObjectInteractionInvoke(object sender, ObjectInteractionArgs args)
         {
             ObjectInteraction.Invoke(sender, args);
         }
-        protected internal void CollectAppleInvoke(object sender, CollectAppleArgs args)
+        protected internal virtual void CollectAppleInvoke(object sender, CollectAppleArgs args)
         {
             CollectApple.Invoke(sender, args);
         }
-        private Timer GetTimer()
+        protected internal virtual Timer GetTimer()
         {
             Timer tm = new Timer()
             {
@@ -302,7 +302,7 @@ namespace Snake.Logic
             });
             return tm;
         }
-        private void CreatePlataform(Direction snake_direction, Point snake_point)
+        protected internal virtual void CreatePlataform(Direction snake_direction, Point snake_point)
         {
             Snake = new Snake(this, snake_direction, snake_point);
             rd = new Random();

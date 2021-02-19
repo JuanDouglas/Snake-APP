@@ -17,7 +17,7 @@ namespace Snake.Logic.Graphic
         /// <summary>
         /// Plataforma de jogo que será desenhada.
         /// </summary>
-        public Plataform Plataform { get; set; }
+        public GamePlataform Plataform { get; set; }
         /// <summary>
         /// Tamanho largura da plataforam de jogo.
         /// </summary>
@@ -38,7 +38,7 @@ namespace Snake.Logic.Graphic
         public Color ColorPrimaryLight { get; set; }
         public List<Block> Blocks { get; private set; }
 
-        public Background(in Plataform plataform, int width, int height)
+        public Background(in GamePlataform plataform, int width, int height)
         {
             Plataform = plataform;
             Width = width;

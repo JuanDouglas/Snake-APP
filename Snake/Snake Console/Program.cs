@@ -13,7 +13,7 @@ namespace Snake_Console
 {
     class Program
     {
-        static Plataform plataform;
+        static GamePlataform plataform;
         static int Width = 10;
         static int Height = 10;
         static int Velocity = 1500;
@@ -21,9 +21,9 @@ namespace Snake_Console
         static void Main(string[] args)
         {
             rd = new Random();
-            plataform = new Plataform(Width,Height,Velocity);
-            plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler(MoveSnake);
-            plataform.LoseGame += new Plataform.LoseGameHandler(Lose);
+            plataform = new DefaultPlataform(Width,Height,Velocity);
+            plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
+            plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
             for (int i = 0; i < rd.Next(0,Width/2); i++)
             {
                 plataform.Objects.Add(new DefaultObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
@@ -63,9 +63,9 @@ namespace Snake_Console
         }
         private static void Lose(object sender, LoseGameArgs LoseArg) {
             plataform.Pause();
-            plataform = new Plataform(Width, Height, Velocity);
-            plataform.MoveSnakeEvent += new Plataform.MoveSnakeEventHandler(MoveSnake);
-            plataform.LoseGame += new Plataform.LoseGameHandler(Lose);
+            plataform = new DefaultPlataform(Width, Height, Velocity);
+            plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
+            plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
             //for (int i = 0; i < rd.Next(0, Width / 2); i++)
             //{
             //    plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));

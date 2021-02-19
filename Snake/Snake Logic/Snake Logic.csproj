@@ -50,6 +50,7 @@
     <Compile Include="Base\ObjectsManager.cs" />
     <Compile Include="Base\SnakeBlock.cs" />
     <Compile Include="Base\PlataformObject.cs" />
+    <Compile Include="DefaultPlataform.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\ObjectContent.cs" />
     <Compile Include="Enums\ObjectType.cs" />
@@ -59,7 +60,7 @@
     <Compile Include="Event Args\ObjectInteractionArgs.cs" />
     <Compile Include="Event Args\SnakeUpgradeArgs.cs" />
     <Compile Include="Head.cs" />
-    <Compile Include="Plataform.cs" />
+    <Compile Include="GamePlataform.cs" />
     <Compile Include="Enums\PointCotent.cs" />
     <Compile Include="Base\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

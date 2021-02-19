@@ -26,7 +26,7 @@ namespace Snake.Logic
         /// <summary>
         /// Plataforma que a cobra está.
         /// </summary>
-        public Plataform Plataform { get; set; }
+        public GamePlataform Plataform { get; set; }
 
         public delegate void SnakeUpgradeHandler(object sender, SnakeUpgradeArgs args);
         public event SnakeUpgradeHandler SnakeUpprade;
@@ -35,7 +35,7 @@ namespace Snake.Logic
         /// Construtor da cobra.
         /// </summary>
         /// <param name="plataform">Plataforma que a cobra irá ficar.</param>
-        public Snake(Plataform plataform, Direction direction, Point location) : base(location, ObjectContent.Solid, ObjectType.Snake)
+        public Snake(GamePlataform plataform, Direction direction, Point location) : base(location, ObjectContent.Solid, ObjectType.Snake)
         {
             if (plataform.Snake != null)
             {
