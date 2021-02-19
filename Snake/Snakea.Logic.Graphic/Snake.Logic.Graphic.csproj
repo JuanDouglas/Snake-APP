@@ -47,7 +47,9 @@
     <Compile Include="Base\Background.cs" />
     <Compile Include="Base\Block.cs" />
     <Compile Include="EventArgs\DrawUIArgs.cs" />
-    <Compile Include="Base\GraphicObject.cs" />
+    <Compile Include="Game\Base\GraphicObject.cs" />
+    <Compile Include="Game\Base\GraphicsObjectsManager.cs" />
+    <Compile Include="Game\GraphicPlataform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using System.Drawing;
 using Snake.Logic;
 using Snake.Logic.Graphic;
 
-namespace Snake.Logic.Graphic
+namespace Snake.Logic.Graphic.Base
 {
     /// <summary>
     /// Background da plataforma.
@@ -37,6 +37,11 @@ namespace Snake.Logic.Graphic
         public Color ColorPrimaryDark { get; set; }
         public Color ColorPrimaryLight { get; set; }
         public List<Block> Blocks { get; private set; }
+
+       public Block BlockByPosition(Logic.Base.Point location)
+        {
+            throw new NotImplementedException();
+        }
 
         public Background(in GamePlataform plataform, int width, int height)
         {

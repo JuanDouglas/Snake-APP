@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Snake.Logic.Graphic
+namespace Snake.Logic.Graphic.Base
 {
     public class Block
     {

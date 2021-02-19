@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 
-namespace Snake.Logic.Graphic
+namespace Snake.Logic.Graphic.EventArgs
 {
     public class DrawUIArgs
     {
         public Image OutPut { get; set; }
-        public UI UI { get; set; }
+        public GameUI UI { get; set; }
     }
 }
