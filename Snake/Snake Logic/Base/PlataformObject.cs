@@ -1,4 +1,6 @@
 ﻿using Snake.Logic.Enums;
+using System;
+
 
 namespace Snake.Logic.Base
 {
@@ -14,5 +16,8 @@ namespace Snake.Logic.Base
             Content = content;
             Type = type;
         }
+        protected internal virtual Image Draw() {
+            throw new NotImplementedException(); 
+        } 
     }
 }

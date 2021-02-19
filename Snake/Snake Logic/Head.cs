@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Snake.Logic
 {
-    public class Head : Block
+    public class Head : SnakeBlock
     {
         /// <summary>
         /// Cobra.

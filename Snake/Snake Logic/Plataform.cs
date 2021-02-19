@@ -13,6 +13,8 @@ namespace Snake.Logic
     /// </summary>
     public class Plataform
     {
+
+
         /// <summary>
         /// Largura da Plataforma.
         /// </summary>
@@ -24,6 +26,7 @@ namespace Snake.Logic
         /// <summary>
         /// Velocidade do jogo.
         /// </summary>
+        /// 
         public int Velocity
         {
             get
@@ -37,10 +40,14 @@ namespace Snake.Logic
             }
         }
         private int _Velocity;
+
+        public ObjectsManager Objects { get; set; }
         /// <summary>
         /// Cobra do jogo.
         /// </summary>
-        public Snake Snake { get; set; }
+        public Snake Snake { get => Objects.FirstOrDefault(fs=>fs.Type==ObjectType.S); set; }
+
+
         /// <summary>
         /// Maçãs da plataforma.
         /// </summary>
@@ -65,7 +72,6 @@ namespace Snake.Logic
         /// Objetos distintos na Plataforma.
         /// </summary>
         public int AppleDeacreaseSpeed { get; set; }
-        public List<PlataformObject> Objects { get; set; }
         private Random rd;
 
         public delegate void MoveSnakeEventHandler(object sender, MoveSnakeArgs args);
@@ -91,6 +97,9 @@ namespace Snake.Logic
         /// Evento de interação com o objecto (Acontece quando alguma parte do corpo da cobra passa por este objeto);
         /// </summary>
         public event ObjectInteractionHandler ObjectInteraction;
+
+        public delegate void UpdateViewHandler(object sender, Plataform plataform);
+        public event UpdateViewHandler UpdateView;
 
         /// <summary>
         /// Construtor da Plataforma.
@@ -287,7 +296,7 @@ namespace Snake.Logic
                 Point previosPoint = new Point();
                 int index = Snake.Blocks.Count;
                 Direction previosDirection;
-                Block previos;
+                SnakeBlock previos;
                 Apple apple = args.Apple;
                 for (int i = 0; i < apple.Power; i++)
                 {
@@ -318,7 +327,7 @@ namespace Snake.Logic
                             break;
                     }
                     var newTurn = new List<Turning>(previos.Turnings);
-                    Block block = new Block(previos.Plataform, previosPoint, previos.Direction, newTurn, index);
+                    SnakeBlock block = new SnakeBlock(previos.Plataform, previosPoint, previos.Direction, newTurn, index);
                     Snake.Blocks.Add(block);
                 }
                 Apples.RemoveAll(remove => remove.Location.Equals(args.Apple.Location));

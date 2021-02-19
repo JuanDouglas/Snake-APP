@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="Block.cs" />
+    <Compile Include="DrawUIArgs.cs" />
+    <Compile Include="GraphicObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>

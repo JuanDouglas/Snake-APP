@@ -8,7 +8,7 @@ namespace Snake.Logic.Base
     /// <summary>
     /// Bloco da cobra.
     /// </summary>
-    public partial class Block
+    public partial class SnakeBlock
     {
         /// <summary>
         /// Posição atual do Bloco.
@@ -34,7 +34,7 @@ namespace Snake.Logic.Base
         /// <param name="direction">Direção inicial.</param>
         /// <param name="turnings">Viradas adicionadas ao bloco de anterior (índicie - 1).</param>
         /// <param name="index">Numéro no índicie.</param>
-        public Block(in Plataform plataform, Point location, Direction direction, List<Turning> turnings, int index)
+        public SnakeBlock(in Plataform plataform, Point location, Direction direction, List<Turning> turnings, int index)
         {
             Location = location;
             Direction = direction;
@@ -48,7 +48,7 @@ namespace Snake.Logic.Base
         /// <param name="location">Local inicial.</param>
         /// <param name="direction">Direção inicial.</param>
         /// <param name="index">Numéro no índicie.</param>
-        public Block(in Plataform plataform, Point location, Direction direction, int index)
+        public SnakeBlock(in Plataform plataform, Point location, Direction direction, int index)
         {
             Location = location;
             Direction = direction;

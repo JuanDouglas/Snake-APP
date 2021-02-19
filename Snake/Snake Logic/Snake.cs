@@ -9,7 +9,7 @@ namespace Snake.Logic
     /// <summary>
     /// Cobra do Jogo.
     /// </summary>
-    public class Snake
+    public class Snake : PlataformObject
     {
         /// <summary>
         /// Tmanho Atual da cobra.
@@ -18,7 +18,7 @@ namespace Snake.Logic
         /// <summary>
         /// Blocos da cobra.
         /// </summary>
-        public List<Block> Blocks { get; internal set; }
+        public List<SnakeBlock> Blocks { get; internal set; }
         /// <summary>
         /// cabeça da cobra.
         /// </summary>
@@ -35,7 +35,7 @@ namespace Snake.Logic
         /// Construtor da cobra.
         /// </summary>
         /// <param name="plataform">Plataforma que a cobra irá ficar.</param>
-        public Snake(Plataform plataform, Direction direction, Point location)
+        public Snake(Plataform plataform, Direction direction, Point location) : base(location, ObjectContent.Solid, ObjectType.Snake)
         {
             if (plataform.Snake != null)
             {
@@ -43,7 +43,7 @@ namespace Snake.Logic
             }
             Plataform = plataform ?? throw new ArgumentNullException(nameof(plataform));
             Head = new Head(this, location, direction);
-            Blocks = new List<Block>();
+            Blocks = new List<SnakeBlock>();
             SnakeUpprade += new SnakeUpgradeHandler((object sender, SnakeUpgradeArgs args) =>
             {
                 _ = args;

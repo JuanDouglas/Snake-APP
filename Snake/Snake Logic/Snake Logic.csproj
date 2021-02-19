@@ -46,7 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apple.cs" />
-    <Compile Include="Base\Block.cs" />
+    <Compile Include="Base\ObjectsManager.cs" />
+    <Compile Include="Base\SnakeBlock.cs" />
     <Compile Include="Base\PlataformObject.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\ObjectContent.cs" />
