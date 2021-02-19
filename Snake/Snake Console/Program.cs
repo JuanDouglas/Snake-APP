@@ -28,7 +28,7 @@ namespace Snake_Console
             {
                 plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
-            Background background= new Background(in plataform,800,800);
+            Background background= new Background(in plataform, 800, 800);
             background.GetImage().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
             plataform.Play();
             ConsoleKeyInfo consoleKey;

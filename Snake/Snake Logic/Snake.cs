@@ -76,7 +76,7 @@ namespace Snake.Logic
         }
 
         /// <summary>
-        /// Adiciona uma virada para cima (Y - 1).
+        /// Adiciona uma virada para cima (Y + 1).
         /// </summary>
         public void MoveUP()
         {
