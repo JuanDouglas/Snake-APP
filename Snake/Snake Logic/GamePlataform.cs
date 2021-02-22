@@ -361,11 +361,6 @@ namespace Snake.Logic
                 }
                 Objects.Remove(apple);
                 Snake.Plataform.CollectedApples++;
-                if (MoveTimer.Interval >= AppleDeacreaseSpeed)
-                {
-                    MoveTimer.Interval -= AppleDeacreaseSpeed;
-                }
-
                 Objects.Add(new Apple(
                     new Point(
                         rd.Next(0, Width),

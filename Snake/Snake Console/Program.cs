@@ -17,7 +17,7 @@ namespace Snake.Console
         static GamePlataform plataform;
         static int Width = 10;
         static int Height = 10;
-        static int Velocity = 1500;
+        static int Velocity = 750;
         static Random rd;
         static void Main(string[] args)
         {
@@ -29,7 +29,7 @@ namespace Snake.Console
             {
                 plataform.Objects.Add(new DefaultObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
-            Background background= new Background(in plataform, 800, 800);
+            Background background= new Background(in plataform, 200, 200);
             background.GetImage().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
             plataform.Play();
             ConsoleKeyInfo consoleKey;
