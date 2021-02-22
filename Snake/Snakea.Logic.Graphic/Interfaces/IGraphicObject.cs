@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Point = Snake.Logic.Base.Point;
 
-namespace Snake.Logic.Graphic.Base
+namespace Snake.Logic.Graphic.Base.Interfaces
 {
     public interface IGraphicObject : IPlataformObject
     {

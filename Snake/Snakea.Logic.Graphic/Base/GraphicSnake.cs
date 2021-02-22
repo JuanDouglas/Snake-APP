@@ -1,6 +1,8 @@
-﻿ using Snake.Logic.Enums;
+﻿using Snake.Logic.Enums;
+using Snake.Logic.Graphic.Base.Interfaces;
 using System.Drawing;
 using Point = Snake.Logic.Base.Point;
+
 namespace Snake.Logic.Graphic.Base
 {
     public class GraphicSnake : Snake, IGraphicObject

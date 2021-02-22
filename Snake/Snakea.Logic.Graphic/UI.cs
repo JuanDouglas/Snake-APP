@@ -1,4 +1,5 @@
 ﻿using Snake.Logic.Graphic.Base;
+using Snake.Logic.Graphic.Base.Interfaces;
 using Snake.Logic.Graphic.EventArgs;
 using System;
 using System.Collections.Generic;
