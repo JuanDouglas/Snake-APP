@@ -9,8 +9,9 @@ using Snake.Logic.Enums;
 using Snake.Logic.Event_Args;
 using Snake.Logic.Graphic;
 
-namespace Snake_Console
+namespace Snake.Console
 {
+    using Console = System.Console;
     class Program
     {
         static GamePlataform plataform;
