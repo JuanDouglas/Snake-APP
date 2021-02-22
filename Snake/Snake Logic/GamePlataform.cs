@@ -1,4 +1,5 @@
 ﻿using Snake.Logic.Base;
+using Snake.Logic.Base.Interfaces;
 using Snake.Logic.Enums;
 using Snake.Logic.Event_Args;
 using System;
@@ -39,7 +40,7 @@ namespace Snake.Logic
         }
         private int _Velocity;
 
-        public virtual ObjectsManager Objects { get; set; }
+        public virtual List<IPlataformObject> Objects { get; set; }
         /// <summary>
         /// Cobra do jogo.
         /// </summary>
@@ -50,7 +51,7 @@ namespace Snake.Logic
             {
                 if (Objects.FirstOrDefault(fs=>fs.Type==ObjectType.Snake)!=null)
                 {
-                    Objects[value.ID] = value;
+                    Objects[GetPositionByID(value.ID)] = value;
                 }
                 else
                 {
@@ -59,7 +60,16 @@ namespace Snake.Logic
             }
         }
 
-
+        private int GetPositionByID(Guid id) {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                if (Objects[0].ID==id)
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
         /// <summary>
         /// Maçãs da plataforma.
         /// </summary>
@@ -67,7 +77,7 @@ namespace Snake.Logic
         {
             get
             {
-                List<PlataformObject> plataformObjects = Objects.Where(wh => wh.Type == ObjectType.Apple).ToList();
+                List<IPlataformObject> plataformObjects = Objects.Where(wh => wh.Type == ObjectType.Apple).ToList();
                 List<Apple> apples = new List<Apple>();
                 foreach (var item in plataformObjects)
                 {
@@ -75,20 +85,7 @@ namespace Snake.Logic
                 }
                 return apples;
             }
-            set
-            {
-                foreach (var item in value)
-                {
-                    if (Objects.FirstOrDefault(fs => fs.Type == ObjectType.Snake) != null)
-                    {
-                        Objects[item.ID] = item;
-                    }
-                    else
-                    {
-                        Objects.Add(item);
-                    }
-                } 
-            }
+           
         }
         /// <summary>
         /// "Poder" das Maçãs (quando irá adicionar no tamanho da cobbra).
@@ -165,7 +162,7 @@ namespace Snake.Logic
             CollectedApples = 1;
             MaxApples = 2;
             AppleDeacreaseSpeed = 200;
-            Objects = new ObjectsManager();
+            Objects = new List<IPlataformObject>();
             CreatePlataform(snake_direction, snake_point);
             for (int i = 0; i < apples; i++)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake.Logic.Base.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace Snake.Logic.Base
 {
-    public class ObjectsManager :  IList<PlataformObject>
+    public abstract class ObjectsManager:  IList<IPlataformObject>
     {
-        private List<PlataformObject> plataformObjects;
-        public PlataformObject this[int index] { get => plataformObjects[index]; set => plataformObjects[index] = value; }
-        public PlataformObject this[Guid id] { get => plataformObjects.FirstOrDefault(fs=>fs.ID.Equals(id)); set => plataformObjects[PositionByID(id)] = value; }
+        private List<IPlataformObject> plataformObjects;
+        public IPlataformObject this[int index] { get => plataformObjects[index]; set => plataformObjects[index] = value; }
+        public IPlataformObject this[Guid id] { get => plataformObjects.FirstOrDefault(fs=>fs.ID.Equals(id)); set => plataformObjects[PositionByID(id)] = value; }
 
 
         public ObjectsManager() {
-            plataformObjects = new List<PlataformObject>();
+            plataformObjects = new List<IPlataformObject>();
         }
 
-        public int Count => plataformObjects.Count;
+        public virtual int Count => plataformObjects.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public virtual bool IsReadOnly => throw new NotImplementedException();
 
-        public void Add(PlataformObject item)
+        public virtual void Add(IPlataformObject item)
         {
             plataformObjects.Add(item);
         }
@@ -32,12 +33,12 @@ namespace Snake.Logic.Base
             throw new NotImplementedException();
         }
 
-        public bool Contains(PlataformObject item)
+        public bool Contains(IPlataformObject item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(PlataformObject[] array, int arrayIndex)
+        public void CopyTo(IPlataformObject[] array, int arrayIndex)
         {
             plataformObjects.CopyTo(array,arrayIndex);
         }
@@ -57,17 +58,17 @@ namespace Snake.Logic.Base
             }
             return 0;
         }
-        public int IndexOf(PlataformObject item)
+        public int IndexOf(IPlataformObject item)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int index, PlataformObject item)
+        public void Insert(int index, IPlataformObject item)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(PlataformObject item)
+        public bool Remove(IPlataformObject item)
         {
             if (plataformObjects.RemoveAll(re => re.ID == item.ID)>=1)
             {
@@ -81,7 +82,7 @@ namespace Snake.Logic.Base
             throw new NotImplementedException();
         }
 
-        IEnumerator<PlataformObject> IEnumerable<PlataformObject>.GetEnumerator()
+        IEnumerator<IPlataformObject> IEnumerable<IPlataformObject>.GetEnumerator()
         {
             return plataformObjects.GetEnumerator();
         }

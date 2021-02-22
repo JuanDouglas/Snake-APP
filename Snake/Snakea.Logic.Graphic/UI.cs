@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Snake.Logic.Graphic.Base;
+using Snake.Logic.Graphic.EventArgs;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,8 +13,9 @@ namespace Snake.Logic.Graphic
     {
         public Background Background { get; set; }
 
-        public delegate void DrawUIHandler(object sender, DrawUIArgs args);
-        public event DrawUIHandler DrawUI;
+
+        public delegate Image FinishedDrawingHandler();
+        public event FinishedDrawingHandler FinishDrawing;
         public GamePlataform Plataform { get; set; }
 
         public UI(in GamePlataform plataform, int width, int height) {
@@ -20,8 +23,7 @@ namespace Snake.Logic.Graphic
             Plataform = plataform;
         }
 
-        private Image Draw(GraphicObject[] graphicObjects) {
-            
+        private Image Draw(IGraphicObject[] graphicObjects) {
             throw new NotImplementedException();
         }
     }

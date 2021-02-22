@@ -27,6 +27,19 @@ namespace Snake.Logic
         /// Plataforma que a cobra está.
         /// </summary>
         public GamePlataform Plataform { get; set; }
+        public Direction Direction
+        {
+            get { return Head.Direction; }
+            set
+            {
+                Point location = Head.Location;
+                Head.AddTuning(value, location);
+                foreach (var item in Blocks)
+                {
+                    item.AddTuning(value, location);
+                }
+            } 
+        }
 
         public delegate void SnakeUpgradeHandler(object sender, SnakeUpgradeArgs args);
         public event SnakeUpgradeHandler SnakeUpprade;

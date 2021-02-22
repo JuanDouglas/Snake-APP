@@ -1,10 +1,11 @@
-﻿using Snake.Logic.Enums;
+﻿using Snake.Logic.Base.Interfaces;
+using Snake.Logic.Enums;
 using System;
 
 
 namespace Snake.Logic.Base
 {
-    public abstract class PlataformObject
+    public abstract class PlataformObject : IPlataformObject
     {
         public Point Location { get; set; }
         public ObjectContent Content { get; set; }

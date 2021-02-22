@@ -46,6 +46,9 @@
   <ItemGroup>
     <Compile Include="Base\Background.cs" />
     <Compile Include="Base\Block.cs" />
+    <Compile Include="EventArgs\DrawingEventArgs.cs" />
+    <Compile Include="Base\GraphicSnake.cs" />
+    <Compile Include="Base\IGraphicObject.cs" />
     <Compile Include="EventArgs\DrawUIArgs.cs" />
     <Compile Include="Base\GraphicObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
