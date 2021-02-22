@@ -8,16 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Point = Snake.Logic.Base.Point;
+using Size = Snake.Logic.Base.Size;
 
 namespace Snake.Logic.Graphic.Base.Interfaces
 {
     public interface IGraphicObject : IPlataformObject
     {
         Image ViewContent { get; set; }
+        bool isVisible { get; set; }
         event DrawingHandler Drawing;
         event FinishedDrawingHandler FinishDrawing;
-        Image Draw();
-        Point GetCenterPoint();
+        DrawResult Draw(Size uiSize);
+        DrawResult Draw(Size uiSize,Size maxSize);
     }
     public delegate void DrawingHandler(object sender, DrawingEventArgs args);
     public delegate Image FinishedDrawingHandler(object sender, FinishedDrawingArgs args);

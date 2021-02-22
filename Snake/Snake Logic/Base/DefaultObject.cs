@@ -9,7 +9,7 @@ namespace Snake.Logic.Base
 {
     public class DefaultObject : PlataformObject
     {
-        public DefaultObject(Point location,ObjectContent content,ObjectType type) : base( location, content,type) { 
+        public DefaultObject(Size plataformSize,Point location,ObjectContent content,ObjectType type) : base(plataformSize,location, content,type) { 
         
         }
     }

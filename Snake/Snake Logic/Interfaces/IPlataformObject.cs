@@ -9,5 +9,6 @@ namespace Snake.Logic.Base.Interfaces
         ObjectContent Content { get; set; }
         ObjectType Type { get; set; }
         Guid ID { get; set; }
+        Size PlataformSize { get; set; }
     }
 }

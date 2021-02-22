@@ -14,14 +14,11 @@ namespace Snake.Logic
     /// </summary>
     public abstract class GamePlataform
     {
+        #region Properties
         /// <summary>
-        /// Largura da Plataforma.
+        /// Largura é altura da plataforma.
         /// </summary>
-        public virtual int Width { get; set; }
-        /// <summary>
-        /// Altura da Plataforma.
-        /// </summary>
-        public virtual int Height { get; set; }
+        public Size Size { get; set; }
         /// <summary>
         /// Velocidade do jogo.
         /// </summary>
@@ -106,6 +103,9 @@ namespace Snake.Logic
         /// <summary>
         /// Objetos distintos na Plataforma.
         /// </summary>
+        #endregion
+
+        #region Events
         public virtual int AppleDeacreaseSpeed { get; set; }
         private Random rd;
 
@@ -132,17 +132,16 @@ namespace Snake.Logic
         /// Evento de interação com o objecto (Acontece quando alguma parte do corpo da cobra passa por este objeto);
         /// </summary>
         public event ObjectInteractionHandler ObjectInteraction;
+        #endregion
 
-        public delegate void UpdateViewHandler(object sender, GamePlataform plataform);
-        public event UpdateViewHandler UpdateView;
-
+        #region Constructors
         /// <summary>
         /// Construtor da Plataforma.
         /// </summary>
         /// <param name="width">Largura da Plataforma.</param>
         /// <param name="height">Altura da Plataforma.</param>
         /// <param name="velocity">Velocidade do jogo.</param>
-        public GamePlataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
+        public GraphicGamePlataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
         {
         }
         /// <summary>
@@ -153,10 +152,9 @@ namespace Snake.Logic
         /// <param name="velocity">Velocidade do jogo.</param>
         /// <param name="snake_direction">Direção inicial do cobra na Plataforma.</param>
         /// <param name="snake_point">Localização incial da cobra na Plataforma.</param>
-        public GamePlataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
+        public GraphicGamePlataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
         {
-            Width = width;
-            Height = height;
+            Size = new Size(width,height);
             Velocity = velocity;
             ApplePower = 2;
             CollectedApples = 1;
@@ -166,9 +164,10 @@ namespace Snake.Logic
             CreatePlataform(snake_direction, snake_point);
             for (int i = 0; i < apples; i++)
             {
-                Objects.Add(new Apple(new Point(rd.Next(Width), rd.Next(Height)),ApplePower,AppleDeacreaseSpeed));
+                Objects.Add(new Apple(Size,new Point(rd.Next(Size.Width), rd.Next(Size.Height)),ApplePower,AppleDeacreaseSpeed));
             }
         }
+        #endregion
 
         /// <summary>
         /// Obtém o contéudo em um local da plataforma.
@@ -177,7 +176,7 @@ namespace Snake.Logic
         /// <returns>Retorna a enumeração do contéudo neste ponto.</returns>
         public virtual PointCotent GetContentInPoint(Point point)
         {
-            if (point.X > Width)
+            if (point.X > Size.Width)
             {
                 return PointCotent.Wall;
             }
@@ -187,7 +186,7 @@ namespace Snake.Logic
                 return PointCotent.Wall;
             }
 
-            if (point.Y > Height)
+            if (point.Y > Size.Height)
             {
                 return PointCotent.Wall;
             }
@@ -305,10 +304,10 @@ namespace Snake.Logic
             rd = new Random();
             for (int i = 0; i < MaxApples; i++)
             {
-                Apples.Add(new Apple(
+                Apples.Add(new Apple(Size,
                     new Point(
-                        rd.Next(0, Width),
-                        rd.Next(0, Height)),
+                        rd.Next(0, Size.Width),
+                        rd.Next(0, Size.Height)),
                     ApplePower,
                     AppleDeacreaseSpeed));
             }
@@ -361,10 +360,10 @@ namespace Snake.Logic
                 }
                 Objects.Remove(apple);
                 Snake.Plataform.CollectedApples++;
-                Objects.Add(new Apple(
+                Objects.Add(new Apple(Size,
                     new Point(
-                        rd.Next(0, Width),
-                        rd.Next(0, Height)),
+                        rd.Next(0, Size.Width),
+                        rd.Next(0, Size.Height)),
                     ApplePower,
                     AppleDeacreaseSpeed));
             });

@@ -11,11 +11,13 @@ namespace Snake.Logic.Base
         public ObjectContent Content { get; set; }
         public ObjectType Type { get; set; }
         public Guid ID { get; set; }
-        public PlataformObject(Point location, ObjectContent content, ObjectType type)
+        public Size PlataformSize { get; set; }
+        public PlataformObject(in Size plataformSize,Point location, ObjectContent content, ObjectType type)
         {
             Location = location;
             Content = content;
             Type = type;
+            PlataformSize = plataformSize;
             ID = Guid.NewGuid();
         }
         public override bool Equals(object obj)

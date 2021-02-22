@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake.Logic
 {
-    public class DefaultPlataform : GamePlataform
+    public class DefaultPlataform : GraphicGamePlataform
     {
         public DefaultPlataform(int width, int height, int velocity) :base(width,height,velocity){ }
     }
