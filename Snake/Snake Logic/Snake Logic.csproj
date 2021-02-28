@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Apple.cs" />
     <Compile Include="Base\DefaultObject.cs" />
-    <Compile Include="Base\DefaultObjectmanager.cs" />
+    <Compile Include="Interfaces\IPlataformObject.cs" />
     <Compile Include="Base\ObjectsManager.cs" />
     <Compile Include="Base\SnakeBlock.cs" />
     <Compile Include="Base\PlataformObject.cs" />

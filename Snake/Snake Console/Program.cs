@@ -11,14 +11,15 @@ using Snake.Logic.Graphic;
 using Snake.Logic.Graphic.Game;
 using Snake.Logic.Graphic.Game.Base;
 
-namespace Snake_Console
+namespace Snake.Console
 {
+    using Console = System.Console;
     class Program
     {
         static GraphicPlataform plataform;
         static int Width = 10;
         static int Height = 10;
-        static int Velocity = 1500;
+        static int Velocity = 750;
         static Random rd;
         static void Main(string[] args)
         {
