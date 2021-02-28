@@ -165,7 +165,7 @@ namespace Snake.Logic
             CollectedApples = 1;
             MaxApples = 2;
             AppleDeacreaseSpeed = 200;
-            Objects = new ObjectsManager();
+            Objects = new DefaultObjectmanager();
             CreatePlataform(snake_direction, snake_point);
             for (int i = 0; i < apples; i++)
             {

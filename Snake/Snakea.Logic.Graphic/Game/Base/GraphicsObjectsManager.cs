@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake.Logic.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snake.Logic.Graphic.Game.Base
 {
-    public class GraphicsObjectsManager : IList<GraphicObject>
+    public class GraphicsObjectsManager : ObjectsManager
     {
         private List<GraphicObject> plataformObjects;
         public GraphicObject this[int index] { get => plataformObjects[index]; set => plataformObjects[index] = value; }
@@ -77,10 +78,6 @@ namespace Snake.Logic.Graphic.Game.Base
             throw new NotImplementedException();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return plataformObjects.GetEnumerator();
-        }
 
         public IEnumerator<GraphicObject> GetEnumerator()
         {

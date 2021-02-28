@@ -25,7 +25,10 @@ namespace Snake.Logic.Graphic
             Plataform = plataform;
         }
 
-        private Image Draw(GraphicObject[] graphicObjects)
+        public Image Draw() {
+            return Draw((GraphicObject[])Plataform.GraphicObjects.ToArray());
+        }
+        public Image Draw(GraphicObject[] graphicObjects)
         {
             Bitmap backgroud = (Bitmap)Background.GetImage();
             foreach (var item in Plataform.GraphicObjects)

@@ -8,12 +8,14 @@ using Snake.Logic.Base;
 using Snake.Logic.Enums;
 using Snake.Logic.Event_Args;
 using Snake.Logic.Graphic;
+using Snake.Logic.Graphic.Game;
+using Snake.Logic.Graphic.Game.Base;
 
 namespace Snake_Console
 {
     class Program
     {
-        static GamePlataform plataform;
+        static GraphicPlataform plataform;
         static int Width = 10;
         static int Height = 10;
         static int Velocity = 1500;
@@ -21,15 +23,15 @@ namespace Snake_Console
         static void Main(string[] args)
         {
             rd = new Random();
-            plataform = new DefaultPlataform(Width,Height,Velocity);
+            plataform = new GraphicPlataform(Width,Height,Velocity);
             plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
             plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
             for (int i = 0; i < rd.Next(0,Width/2); i++)
             {
-                plataform.Objects.Add(new DefaultObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+                plataform.Objects.Add(new GraphicObject(Properties.Resources.apple_13,new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
-            Background background= new Background(in plataform, 800, 800);
-            background.GetImage().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
+            GameUI gameUI = new GameUI(in plataform,800,600);
+            gameUI.Draw().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
             plataform.Play();
             ConsoleKeyInfo consoleKey;
             do
@@ -63,7 +65,7 @@ namespace Snake_Console
         }
         private static void Lose(object sender, LoseGameArgs LoseArg) {
             plataform.Pause();
-            plataform = new DefaultPlataform(Width, Height, Velocity);
+            plataform = new GraphicPlataform(Width, Height, Velocity);
             plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
             plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
             //for (int i = 0; i < rd.Next(0, Width / 2); i++)

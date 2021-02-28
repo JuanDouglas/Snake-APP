@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snake.Logic.Base
 {
-    public class ObjectsManager :  IList<PlataformObject>
+    public abstract class ObjectsManager :  IList<PlataformObject>
     {
         private List<PlataformObject> plataformObjects;
         public PlataformObject this[int index] { get => plataformObjects[index]; set => plataformObjects[index] = value; }
