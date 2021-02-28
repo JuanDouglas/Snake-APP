@@ -17,7 +17,7 @@ namespace Snake.Logic.Graphic.Base
         /// <summary>
         /// Plataforma de jogo que será desenhada.
         /// </summary>
-        public GamePlataform Plataform { get; set; }
+        public GraphicGamePlataform Plataform { get; set; }
         /// <summary>
         /// Tamanho largura da plataforam de jogo.
         /// </summary>
@@ -34,25 +34,33 @@ namespace Snake.Logic.Graphic.Base
         /// Tamanho da altura dos blocos em Pixeis.
         /// </summary>
         public int BlockHeight { get; set; }
+        /// <summary>
+        /// Cor primária do fundo.
+        /// </summary>
         public Color ColorPrimaryDark { get; set; }
+        /// <summary>
+        /// Cor secundário do fundo.
+        /// </summary>
         public Color ColorPrimaryLight { get; set; }
+        /// <summary>
+        /// Quantidade de blocos no desenho.
+        /// </summary>
         public List<Block> Blocks { get; private set; }
 
-       public Block BlockByPosition(Logic.Base.Point location)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Background(in GamePlataform plataform, int width, int height)
+        public Image BackgroundPather { get => GetImage(); }
+        public Background(in GraphicGamePlataform plataform, int width, int height)
         {
             Plataform = plataform;
             Width = width;
             Height = height;
             ColorPrimaryDark = Color.FromArgb(255, 142, 204, 57);
             ColorPrimaryLight = Color.FromArgb(255, 168, 217, 73);
-            BlockWidth = Width / Plataform.Width;
-            BlockHeight = Height / Plataform.Height;
+            BlockWidth = Width / Plataform.Size.Width;
+            BlockHeight = Height / Plataform.Size.Height;
             Blocks = new List<Block>();
+        }
+        public Point GetPointByLocation(global::Snake.Logic.Base.Point point) {
+            return Blocks.FirstOrDefault(fs=>fs.PlataformAxis.X==point.X&&fs.PlataformAxis.Y==point.Y).Axis;
         }
         public Image GetImage()
         {

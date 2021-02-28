@@ -8,6 +8,7 @@ namespace Snake.Logic.Graphic.Base
     public class GraphicSnake : Snake, IGraphicObject
     {
         public Image ViewContent { get; set; }
+        public bool isVisible { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public event DrawingHandler Drawing;
         public event FinishedDrawingHandler FinishDrawing;
@@ -21,12 +22,12 @@ namespace Snake.Logic.Graphic.Base
            
         }
 
-        public Image Draw()
+        public DrawResult Draw(Logic.Base.Size uiSize)
         {
             throw new System.NotImplementedException();
         }
 
-        public Point GetCenterPoint()
+        public DrawResult Draw(Logic.Base.Size uiSize, Logic.Base.Size maxSize)
         {
             throw new System.NotImplementedException();
         }

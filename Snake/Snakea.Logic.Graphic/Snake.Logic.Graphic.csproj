@@ -47,13 +47,14 @@
     <Compile Include="Base\Background.cs" />
     <Compile Include="Base\Block.cs" />
     <Compile Include="Base\GraphicGamePlataform.cs" />
+    <Compile Include="DrawResult.cs" />
     <Compile Include="EventArgs\DrawingEventArgs.cs" />
     <Compile Include="Base\GraphicSnake.cs" />
     <Compile Include="Interfaces\IGraphicObject.cs" />
     <Compile Include="EventArgs\FinishedDrawing.cs" />
     <Compile Include="Base\GraphicObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI.cs" />
+    <Compile Include="GameUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snake Logic\Snake Logic.csproj">

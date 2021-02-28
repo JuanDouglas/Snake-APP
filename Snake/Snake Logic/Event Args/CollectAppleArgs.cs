@@ -7,7 +7,7 @@ namespace Snake.Logic.Event_Args
         public Apple Apple { get; set; }
         public int Power { get; set; }
         public Snake Snake { get; set; }
-        public GamePlataform Plataform { get => Snake.Plataform; }
+        public GraphicGamePlataform Plataform { get => Snake.Plataform; }
         public int DeacreaseSpeed { get => Apple.AppleDeacreaseSpeed; }
 
         public CollectAppleArgs(Apple apple, int power, Snake snake)
