@@ -1,6 +1,6 @@
 ﻿using Snake.Logic.Base;
 using Snake.Logic.Enums;
-using Snake.Logic.Event_Args;
+using Snake.Logic.EventArgs;
 using Snake.Logic.Exceptions;
 using System.Linq;
 

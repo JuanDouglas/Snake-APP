@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snake.Logic.Event_Args
+namespace Snake.Logic.EventArgs
 {
     public class SnakeUpgradeArgs
     {

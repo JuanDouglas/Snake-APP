@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 using Snake.Logic;
 using Snake.Logic.Base;
 using Snake.Logic.Enums;
-using Snake.Logic.Event_Args;
+using Snake.Logic.EventArgs;
 using Snake.Logic.Graphic;
-using Snake.Logic.Graphic.Game;
-using Snake.Logic.Graphic.Game.Base;
 using Snake.Logic.Graphic.Base;
+using Snake.Logic.Graphic.EventArgs;
 
 namespace Snake.Console
 {
     using Console = System.Console;
     class Program
     {
-        static Logic.Graphic.Base.GraphicGamePlataform plataform;
+        static GraphicGamePlataform plataform;
         static GameUI gameUI;
         static int Width = 10;
         static int Height = 10;
@@ -26,15 +25,18 @@ namespace Snake.Console
         static void Main(string[] args)
         {
             rd = new Random();
-            plataform = new Logic.Graphic.Base.GraphicGamePlataform(Width, Height, Velocity);
-            plataform.MoveSnakeEvent += new Logic.GraphicGamePlataform.MoveSnakeEventHandler(MoveSnake);
-            plataform.LoseGame += new Logic.GraphicGamePlataform.LoseGameHandler(Lose);
-            for (int i = 0; i < rd.Next(0,Width/2); i++)
+            plataform = new GraphicGamePlataform(Width, Height, Velocity);
+            plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
+            plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
+            for (int i = 0; i < rd.Next(0, Width / 2); i++)
             {
                 plataform.Objects.Add(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
-            GameUI gameUI = new GameUI(in plataform,800,600);
-            gameUI.Draw().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
+            GameUI gameUI = new GameUI(plataform, 800, 600);
+            gameUI.NewViewCreate += new GameUI.NewViewCreateHandler((object sender, NewViewCreateEventArgs eventArgs) =>
+            {
+                eventArgs.Result.Save($"{Environment.CurrentDirectory}\\OutPut.jpeg");
+            });
             plataform.Play();
             ConsoleKeyInfo consoleKey;
             do
@@ -64,21 +66,23 @@ namespace Snake.Console
                     Console.Clear();
                     Console.WriteLine("Ei!");
                 }
-            } while (consoleKey.Key!=ConsoleKey.Escape);
+            } while (consoleKey.Key != ConsoleKey.Escape);
         }
-        private static void Lose(object sender, LoseGameArgs LoseArg) {
+        private static void Lose(object sender, LoseGameArgs LoseArg)
+        {
             plataform.Pause();
-            plataform = new Logic.Graphic.Base.GraphicGamePlataform(Width, Height, Velocity);
-            plataform.MoveSnakeEvent += new Logic.GraphicGamePlataform.MoveSnakeEventHandler(MoveSnake);
-            plataform.LoseGame += new Logic.GraphicGamePlataform.LoseGameHandler(Lose);
+            plataform = new GraphicGamePlataform(Width, Height, Velocity);
+            plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
+            plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
             //for (int i = 0; i < rd.Next(0, Width / 2); i++)
             //{
             //    plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             //}
             plataform.Play();
         }
-        private static void MoveSnake(object sendeer, MoveSnakeArgs moveArgs) {
-      
+        private static void MoveSnake(object sendeer, MoveSnakeArgs moveArgs)
+        {
+
             Console.Clear();
             for (int x = (-1); x < plataform.Size.Height + 2; x++)
             {

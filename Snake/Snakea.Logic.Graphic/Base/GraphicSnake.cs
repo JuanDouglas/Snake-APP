@@ -8,10 +8,8 @@ namespace Snake.Logic.Graphic.Base
     public class GraphicSnake : Snake, IGraphicObject
     {
         public Image ViewContent { get; set; }
-        public bool isVisible { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-        public event DrawingHandler Drawing;
-        public event FinishedDrawingHandler FinishDrawing;
+        public bool isVisible { get; set; }
+        public int UpdateVersion { get; set; }
 
         public GraphicSnake(GraphicGamePlataform plataform,Direction direction,Point location) : base(plataform,direction,location) { 
         
@@ -22,6 +20,9 @@ namespace Snake.Logic.Graphic.Base
            
         }
 
+        public event DrawingHandler Drawing;
+        public event FinishedDrawingHandler FinishDrawing;
+
         public DrawResult Draw(Logic.Base.Size uiSize)
         {
             throw new System.NotImplementedException();
@@ -30,6 +31,15 @@ namespace Snake.Logic.Graphic.Base
         public DrawResult Draw(Logic.Base.Size uiSize, Logic.Base.Size maxSize)
         {
             throw new System.NotImplementedException();
+        }
+
+        public bool Equals(IGraphicObject other)
+        {
+            if (other.ID.Equals(this.ID))
+            {
+                return true;
+            }
+            return base.Equals(other);
         }
     }
 }

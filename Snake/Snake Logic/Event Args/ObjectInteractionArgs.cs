@@ -3,7 +3,7 @@ using Snake.Logic.Base.Interfaces;
 using Snake.Logic.Enums;
 using System;
 
-namespace Snake.Logic.Event_Args
+namespace Snake.Logic.EventArgs
 {
     public class ObjectInteractionArgs
     {
@@ -14,7 +14,7 @@ namespace Snake.Logic.Event_Args
 
         public ObjectInteractionArgs(IPlataformObject @object, Snake snake)
         {
-            Object = @object ?? throw new ArgumentNullException(nameof(@object));
+            Object = @object;
             Snake = snake ?? throw new ArgumentNullException(nameof(snake));
         }
     }

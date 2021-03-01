@@ -1,7 +1,7 @@
 ﻿using Snake.Logic.Base;
 using Snake.Logic.Base.Interfaces;
 using Snake.Logic.Enums;
-using Snake.Logic.Event_Args;
+using Snake.Logic.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Snake.Logic
     /// <summary>
     /// Plataforma de jogo.
     /// </summary>
-    public abstract class GamePlataform
+    public abstract class GamePlataform 
     {
         #region Properties
         /// <summary>
@@ -82,6 +82,12 @@ namespace Snake.Logic
                 }
                 return apples;
             }
+            set {
+                if (value!=null)
+                {
+
+                }
+            }
            
         }
         /// <summary>
@@ -132,6 +138,12 @@ namespace Snake.Logic
         /// Evento de interação com o objecto (Acontece quando alguma parte do corpo da cobra passa por este objeto);
         /// </summary>
         public event ObjectInteractionHandler ObjectInteraction;
+
+        public delegate void UpdateViewHandler(object sender, UpdateViewArgs args);
+        /// <summary>
+        /// Evento que "força" uma atualização da View.
+        /// </summary>
+        public virtual event UpdateViewHandler UpdateView;
         #endregion
 
         #region Constructors
@@ -141,7 +153,7 @@ namespace Snake.Logic
         /// <param name="width">Largura da Plataforma.</param>
         /// <param name="height">Altura da Plataforma.</param>
         /// <param name="velocity">Velocidade do jogo.</param>
-        public GraphicGamePlataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
+        public GamePlataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
         {
         }
         /// <summary>
@@ -152,7 +164,7 @@ namespace Snake.Logic
         /// <param name="velocity">Velocidade do jogo.</param>
         /// <param name="snake_direction">Direção inicial do cobra na Plataforma.</param>
         /// <param name="snake_point">Localização incial da cobra na Plataforma.</param>
-        public GraphicGamePlataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
+        public GamePlataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
         {
             Size = new Size(width,height);
             Velocity = velocity;
@@ -161,6 +173,15 @@ namespace Snake.Logic
             MaxApples = 2;
             AppleDeacreaseSpeed = 200;
             Objects = new List<IPlataformObject>();
+            UpdateView += new UpdateViewHandler((object sender, UpdateViewArgs args) => {
+               _ = sender;
+            });
+            ObjectInteraction += new ObjectInteractionHandler((object sender, ObjectInteractionArgs args)=> {
+                UpdateViewInvoke(sender, new UpdateViewArgs());
+            });
+            MoveSnakeEvent += new MoveSnakeEventHandler((object sender, MoveSnakeArgs args) => {
+               ObjectInteraction.Invoke(sender,new ObjectInteractionArgs(null,Snake));
+            });
             CreatePlataform(snake_direction, snake_point);
             for (int i = 0; i < apples; i++)
             {
@@ -273,6 +294,10 @@ namespace Snake.Logic
         {
             CollectApple.Invoke(sender, args);
         }
+        public virtual void UpdateViewInvoke(object sender, UpdateViewArgs args)
+        {
+            UpdateView.Invoke(sender,args);
+        }
         protected internal virtual Timer GetTimer()
         {
             Timer tm = new Timer()
@@ -298,13 +323,17 @@ namespace Snake.Logic
             });
             return tm;
         }
+
+        protected internal virtual void AddApple(Apple apple) {
+            Objects.Add(apple);
+        }
         protected internal virtual void CreatePlataform(Direction snake_direction, Point snake_point)
         {
             Snake = new Snake(this, snake_direction, snake_point);
             rd = new Random();
             for (int i = 0; i < MaxApples; i++)
             {
-                Apples.Add(new Apple(Size,
+                AddApple(new Apple(Size,
                     new Point(
                         rd.Next(0, Size.Width),
                         rd.Next(0, Size.Height)),

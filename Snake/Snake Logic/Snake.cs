@@ -1,6 +1,6 @@
 ﻿using Snake.Logic.Base;
 using Snake.Logic.Enums;
-using Snake.Logic.Event_Args;
+using Snake.Logic.EventArgs;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +26,7 @@ namespace Snake.Logic
         /// <summary>
         /// Plataforma que a cobra está.
         /// </summary>
-        public GraphicGamePlataform Plataform { get; set; }
+        public GamePlataform Plataform { get; set; }
         public Direction Direction
         {
             get { return Head.Direction; }
@@ -48,7 +48,7 @@ namespace Snake.Logic
         /// Construtor da cobra.
         /// </summary>
         /// <param name="plataform">Plataforma que a cobra irá ficar.</param>
-        public Snake(GraphicGamePlataform plataform, Direction direction, Point location) : base(plataform.Size,location, ObjectContent.Solid, ObjectType.Snake)
+        public Snake(GamePlataform plataform, Direction direction, Point location) : base(plataform.Size,location, ObjectContent.Solid, ObjectType.Snake)
         {
             if (plataform.Snake != null)
             {

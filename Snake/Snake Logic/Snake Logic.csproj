@@ -70,6 +70,7 @@
     <Compile Include="Exceptions\TurningNotPossibleException.cs" />
     <Compile Include="Base\Turning.cs" />
     <Compile Include="Snake.cs" />
+    <Compile Include="Event Args\UpdateViewArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="snake.ico" />

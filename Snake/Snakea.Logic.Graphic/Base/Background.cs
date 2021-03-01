@@ -46,8 +46,8 @@ namespace Snake.Logic.Graphic.Base
         /// Quantidade de blocos no desenho.
         /// </summary>
         public List<Block> Blocks { get; private set; }
-
-        public Background(in GamePlataform plataform, int width, int height)
+        public Image BackgroundPather { get => GetImage(); }
+        public Background(in GraphicGamePlataform plataform, int width, int height)
         {
             Plataform = plataform;
             Width = width;
@@ -57,9 +57,17 @@ namespace Snake.Logic.Graphic.Base
             BlockWidth = Width / Plataform.Size.Width;
             BlockHeight = Height / Plataform.Size.Height;
             Blocks = new List<Block>();
+            for (int x = 0; x < Plataform.Size.Width; x++)
+            {
+                for (int y = 0; y < Plataform.Size.Height; y++)
+                {
+                    Blocks.Add(new Block(new Point(x * Plataform.Size.Width, y * Plataform.Size.Height), new Point(x, y)));
+                }
+            }
         }
-        public Point GetPointByLocation(global::Snake.Logic.Base.Point point) {
-            return Blocks.FirstOrDefault(fs=>fs.PlataformAxis.X==point.X&&fs.PlataformAxis.Y==point.Y).Axis;
+        public Point GetPointByLocation(global::Snake.Logic.Base.Point point)
+        {
+            return Blocks.FirstOrDefault(fs => fs.PlataformAxis.X == point.X && fs.PlataformAxis.Y == point.Y).Axis;
         }
         public Image GetImage()
         {
@@ -86,12 +94,6 @@ namespace Snake.Logic.Graphic.Base
 
                     if (horizontalCount == BlockWidth)
                     {
-                        Blocks.Add(
-                            new Block(
-                                new Point(x - (BlockWidth / 2), y + (BlockHeight / 2)),
-                                new Point(axisX, axisY)
-                                )
-                            );
                         if (positive)
                         {
                             positive = false;
