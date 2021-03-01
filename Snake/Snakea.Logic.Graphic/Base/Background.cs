@@ -61,11 +61,11 @@ namespace Snake.Logic.Graphic.Base
             {
                 for (int y = 0; y < Plataform.Size.Height; y++)
                 {
-                    Blocks.Add(new Block(new Point(x * Plataform.Size.Width, y * Plataform.Size.Height), new Point(x, y)));
+                    Blocks.Add(new Block(new Point((Width / Plataform.Size.Width) * x, (Width / Plataform.Size.Width) * y), new Point(x, y)));
                 }
             }
         }
-        public Point GetPointByLocation(global::Snake.Logic.Base.Point point)
+        public Point GetPointByLocation(Logic.Base.Point point)
         {
             return Blocks.FirstOrDefault(fs => fs.PlataformAxis.X == point.X && fs.PlataformAxis.Y == point.Y).Axis;
         }

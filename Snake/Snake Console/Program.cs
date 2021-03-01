@@ -32,12 +32,12 @@ namespace Snake.Console
             {
                 plataform.Objects.Add(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
-            GameUI gameUI = new GameUI(plataform, 800, 600);
+            gameUI = new GameUI(plataform, 800, 600);
             gameUI.NewViewCreate += new GameUI.NewViewCreateHandler((object sender, NewViewCreateEventArgs eventArgs) =>
             {
                 eventArgs.Result.Save($"{Environment.CurrentDirectory}\\OutPut.jpeg");
             });
-            plataform.Play();
+            gameUI.Plataform.Play();
             ConsoleKeyInfo consoleKey;
             do
             {
@@ -134,6 +134,7 @@ namespace Snake.Console
                 }
                 Console.WriteLine();
             }
+            
         }
     }
 }
