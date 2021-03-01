@@ -8,6 +8,8 @@ using Snake.Logic.Base;
 using Snake.Logic.Enums;
 using Snake.Logic.Event_Args;
 using Snake.Logic.Graphic;
+using Snake.Logic.Graphic.Game;
+using Snake.Logic.Graphic.Game.Base;
 using Snake.Logic.Graphic.Base;
 
 namespace Snake.Console
@@ -31,8 +33,8 @@ namespace Snake.Console
             {
                 plataform.Objects.Add(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
-            Background background= new Background(in plataform, 200, 200);
-            background.GetImage().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
+            GameUI gameUI = new GameUI(in plataform,800,600);
+            gameUI.Draw().Save($"{Environment.CurrentDirectory}\\Teste.jpeg");
             plataform.Play();
             ConsoleKeyInfo consoleKey;
             do

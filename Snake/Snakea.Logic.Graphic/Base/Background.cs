@@ -47,8 +47,7 @@ namespace Snake.Logic.Graphic.Base
         /// </summary>
         public List<Block> Blocks { get; private set; }
 
-        public Image BackgroundPather { get => GetImage(); }
-        public Background(in GraphicGamePlataform plataform, int width, int height)
+        public Background(in GamePlataform plataform, int width, int height)
         {
             Plataform = plataform;
             Width = width;
