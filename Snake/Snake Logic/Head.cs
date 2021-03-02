@@ -39,6 +39,7 @@ namespace Snake.Logic
                 }
             }
 
+            Plataform.MoveSnakeInvoke(Snake,new MoveSnakeArgs());
             switch (Direction)
             {
                 case Direction.Down:
@@ -54,11 +55,11 @@ namespace Snake.Logic
                     point = new Point(Location.X, Location.Y + 1);
                     break;
             }
-
+       
             switch (Snake.Plataform.GetContentInPoint(point))
             {
                 case PointCotent.Wall:
-                    Plataform.LoseInvoke(this, new LoseGameArgs(PointCotent.Wall, Plataform.Snake.Legacy, Plataform.CollectedApples));
+                    Plataform.LoseInvoke(this, new LoseGameArgs(null, "It is not possible to go through the wall.", KillCause.Wall, Snake.Legacy, Plataform.CollectedApples));
                     break;
                 case PointCotent.Apple:
                     base.Move();
@@ -71,7 +72,8 @@ namespace Snake.Logic
                     }
                     break;
                 case PointCotent.SnakeBody:
-                    throw new SnakeBodyException();
+                    Plataform.LoseInvoke(this, new LoseGameArgs(null, "It is not possible that the snake can cross its body.", KillCause.SnakeBody, Snake.Legacy, Plataform.CollectedApples));
+                    break;
                 default:
                     foreach (var item in Plataform.Objects.ToArray())
                     {
@@ -79,7 +81,7 @@ namespace Snake.Logic
                         {
                             if (item.Content == ObjectContent.Solid)
                             {
-                                Plataform.LoseInvoke(Plataform.Snake, new LoseGameArgs(item, Plataform.Snake.Legacy, Plataform.CollectedApples));
+                                Plataform.LoseInvoke(this, new LoseGameArgs(null, "The snake encountered an obstacle in front of you.", KillCause.SolidObject, Snake.Legacy, Plataform.CollectedApples));
                             }
                             Plataform.ObjectInteractionInvoke(Plataform.Snake, new ObjectInteractionArgs(item, Plataform.Snake));
                         }
@@ -91,6 +93,7 @@ namespace Snake.Logic
                     }
                     break;
             }
+            
         }
 
     }

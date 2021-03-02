@@ -31,6 +31,8 @@ namespace Snake.Logic.Base
             }
             return base.Equals(obj);
         }
+
+     
     }
 
 }

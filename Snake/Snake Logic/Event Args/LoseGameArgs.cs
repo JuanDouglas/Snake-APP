@@ -1,16 +1,21 @@
-﻿using System;
+﻿using Snake.Logic.Enums;
+using System;
 
 namespace Snake.Logic.EventArgs
 {
     public class LoseGameArgs
     {
-        public object Cause { get; set; }
+        public object CauseObject { get; set; }
+        public string Justification { get; set; }
+        public KillCause Cause { get; set; }
         public Nullable<int> Points { get; set; }
         public Nullable<int> CollectedApples { get; set; }
 
-        public LoseGameArgs(object cause, Nullable<int> points, Nullable<int> collectedApples)
+        public LoseGameArgs(object causeObject, string justification, KillCause cause, int? points, int? collectedApples)
         {
-            Cause = cause ?? throw new ArgumentNullException(nameof(cause));
+            CauseObject = causeObject;
+            Justification = justification ?? throw new ArgumentNullException(nameof(justification));
+            Cause = cause;
             Points = points;
             CollectedApples = collectedApples;
         }

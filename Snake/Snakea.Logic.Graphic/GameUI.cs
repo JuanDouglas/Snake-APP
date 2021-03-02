@@ -16,45 +16,65 @@ namespace Snake.Logic.Graphic
         public Background Background { get; set; }
         public int Width { get => _width; set { _width = value; } }
         private int _width;
-        public int Height { get => _height; set { _height= value; } }
+        public int Height { get => _height; set { _height = value; } }
         private int _height;
 
         public delegate Image FinishedDrawingHandler();
         public event FinishedDrawingHandler FinishDrawing;
-        public GraphicGamePlataform Plataform { get; set; }
-        public delegate void NewViewCreateHandler(object sender, NewViewCreateEventArgs args);
-        public event NewViewCreateHandler NewViewCreate;
+        public GraphicGamePlataform GamePlataform
+        {
+            get => _gamePlataform; set
+            {
+                _gamePlataform = value;
+                Background = new Background(GamePlataform, Width, Height);
+                GamePlataform.UpdateView += new GamePlataform.UpdateViewHandler((object sender, UpdateViewArgs args) =>
+                {
+
+                });
+                GamePlataform.LoseGame += new GamePlataform.LoseGameHandler((object sender, LoseGameArgs args) =>
+                {
+                    GamePlataform.Stop();
+                });
+            }
+        }
+        private GraphicGamePlataform _gamePlataform;
         public GameUI(in GraphicGamePlataform plataform, int width, int height)
         {
             Width = width;
             Height = height;
-            Plataform = plataform;
-            Background = new Background(Plataform, width, height);
-            Plataform.UpdateView += new GamePlataform.UpdateViewHandler((object sender, UpdateViewArgs args) =>
+            if (plataform != null)
             {
-                NewViewCreate.Invoke(sender, new NewViewCreateEventArgs(Draw(Plataform.GraphicObjects.ToArray()), Plataform, this));
-            });
-          
+                GamePlataform = plataform;
+            }
         }
 
-        private Image Draw(IGraphicObject[] graphicObjects)
+        public Image Draw()
         {
-            Image background = Background.GetImage();
-            background.Save($"{Environment.CurrentDirectory}\\Background.jpeg");
-            Graphics graphics = Graphics.FromImage(background);
-            foreach (var item in graphicObjects)
+            Bitmap result = (Bitmap)Background.GetImage();
+
+            foreach (var item in GamePlataform.GraphicObjects)
             {
-                if (item.isVisible)
+                DrawResult drawResult = item.Draw(new Size(Width, Height));
+                result = DrawImage(result, (Bitmap)drawResult.Image,
+                    Background.GetPointByLocation(drawResult.CenterPoint));
+            }
+            return result;
+        }
+
+        private Bitmap DrawImage(Bitmap background, Bitmap image, Point point)
+        {
+            for (int x = 0; x < image.Width; x++)
+            {
+                for (int y = 0; y < image.Height; y++)
                 {
-                    DrawResult drawResult = item.Draw(new Size(Width, Height));
-                    graphics.DrawImage(drawResult.Image,
-                        Background.GetPointByLocation(drawResult.CenterPoint)
-                       );
-                    graphics.Save();
-                    Console.WriteLine($"Draw object ({item.ID}) Elapsed: {drawResult.Elapsed}");
+                    Color colorPixel = image.GetPixel(x, y);
+                    Color empty = Color.FromArgb(0, 0, 0, 0);
+                    if (colorPixel != empty && colorPixel != Color.Empty && colorPixel != Color.Transparent)
+                    {
+                        background.SetPixel(x + point.X, y + point.Y, image.GetPixel(x, y));
+                    }
                 }
             }
-
             return background;
         }
     }

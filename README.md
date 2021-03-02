@@ -8,6 +8,19 @@
 # News from Versions 
 # **1.0** Logic Create
 Creating the main logic is a test.
+- **Console Outputs.**
+	- **H**: Header for Snake.
+	- **S**: Snake Body.
+	- **W**: Wall.
+	- **A**: Apple.
+	- **T**: Three.
+	- **?**: Unspecified object.
+- **Comands**
+	- **↑**: Indicates that a snake will move upwards
+	- **↓**: Indicates that a snake is going to move down
+	- **→**: Indicates that a snake will move to the right.
+	- **←**: Indicates that a snake will move to the left.
+	- **K**: Kill Snake.
 - **Features**
 	- The apple adds size to the snake's body.
 	- The apple consistent with game speed.

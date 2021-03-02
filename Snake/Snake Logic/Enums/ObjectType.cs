@@ -2,9 +2,10 @@
 {
     public enum ObjectType : int
     {
-        Tree = 0,
+        Tree,
         Apple,
         Snake,
-        Lake = 1
+        Lake,
+        Default
     }
 }

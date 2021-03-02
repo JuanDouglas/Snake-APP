@@ -3,54 +3,53 @@ using Snake.Logic.Base.Interfaces;
 using Snake.Logic.Enums;
 using Snake.Logic.Graphic.Base.Interfaces;
 using Snake.Logic.Graphic.EventArgs;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using Point = Snake.Logic.Base.Point;
 using Size = Snake.Logic.Base.Size;
 
 namespace Snake.Logic.Graphic.Base
 {
-    public class GraphicObject : Logic.Base.PlataformObject, IGraphicObject
+    public class GraphicObject : PlataformObject, IGraphicObject
     {
-        public Image ViewContent { get; set; }
         public bool isVisible { get; set; }
         public int UpdateVersion { get; set; }
+        public GraphicObject(PlataformObject plataformObject) : this(plataformObject.PlataformSize, plataformObject.Location, plataformObject.Content, plataformObject.Type)
+        {
 
-        public GraphicObject(PlataformObject plataformObject) : this( plataformObject.PlataformSize, plataformObject.Location,plataformObject.Content,plataformObject.Type) { 
-        
         }
         public GraphicObject(IPlataformObject plataformObject) : this(plataformObject.PlataformSize, plataformObject.Location, plataformObject.Content, plataformObject.Type)
         {
 
         }
-        public GraphicObject(Size plataformSize, Point location, ObjectContent content, ObjectType type) : this(plataformSize, location, content, type, Properties.Resources._default)
+        public GraphicObject(Size plataformSize, Point location,  ObjectContent content,  ObjectType type) : base(plataformSize, location, content, type)
         {
-
-        }
-        public GraphicObject(Size plataformSize, Point location, ObjectContent content, ObjectType type, Image viewContent) : base(plataformSize, location, content, type)
-        {
-            ViewContent = viewContent;
             isVisible = true;
-            Drawing += new DrawingHandler((object sender, DrawingEventArgs args) => { 
-            
+            Drawing += new DrawingHandler((object sender, DrawingEventArgs args) =>
+            {
+
             });
-            FinishDrawing += new FinishedDrawingHandler((object sender, FinishedDrawingArgs args)=> {
+            FinishDrawing += new FinishedDrawingHandler((object sender, FinishedDrawingArgs args) =>
+            {
                 return args.OutPut;
             });
         }
 
         public event DrawingHandler Drawing;
         public event FinishedDrawingHandler FinishDrawing;
-        public DrawResult Draw(Size uiSize)
+        public DrawResult Draw(in Size uiSize)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
             Drawing.Invoke(this, new DrawingEventArgs());
 
-            DrawResult drawResult = new DrawResult(new Bitmap(ViewContent,
-                new System.Drawing.Size(uiSize.Width/PlataformSize.Width,uiSize.Height/PlataformSize.Height)), 
-                    Location);
+            DrawResult drawResult = new DrawResult(ImgByType(Type, 
+                new Size(uiSize.Width / PlataformSize.Width, uiSize.Height / PlataformSize.Height)),
+                Location);
 
             stopwatch.Stop();
 
@@ -60,7 +59,7 @@ namespace Snake.Logic.Graphic.Base
             return drawResult;
         }
 
-        public DrawResult Draw(Size uiSize, Size maxSize)
+        public DrawResult Draw(in Size uiSize, in Size maxSize)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -73,14 +72,61 @@ namespace Snake.Logic.Graphic.Base
             drawResult.Elapsed += stopwatch.Elapsed;
             return drawResult;
         }
+        protected internal static Bitmap ImgByType(ObjectType type, in Size size)
+        {
+            if (ImagesByType==null)
+            {
+                CreateImages();
+            }
 
+            ImageByType imageByType = ImagesByType.FirstOrDefault(fs => fs.Type == type);
+            if (imageByType==null)
+            {
+                type = ObjectType.Default;
+                imageByType = ImagesByType.FirstOrDefault(fs => fs.Type == type);
+            }
+
+            Bitmap image = imageByType.Image;
+
+            if (!size.Equals(new Size()))
+            {
+                if (image.Width != size.Width || image.Height != size.Height)
+                {
+                    ImagesByType.FirstOrDefault(fs => fs.Type == type).Image = new Bitmap(image, new System.Drawing.Size(size.Width, size.Height));
+                    image = ImagesByType.FirstOrDefault(fs => fs.Type == type).Image;
+                }
+            }
+            return image;
+        }
+        private static void CreateImages() {
+            ImagesByType = new List<ImageByType>
+            {
+                new ImageByType(ObjectType.Apple, Properties.Resources.apple),
+                new ImageByType(ObjectType.Tree, Properties.Resources.tree),
+                new ImageByType(ObjectType.Default,Properties.Resources._default)
+            };
+        }
+        private static List<ImageByType> ImagesByType { get; set; }
+        private class ImageByType {
+            public ObjectType Type { get; set; }
+            public Bitmap Image { get; set; }
+            public ImageByType(ObjectType type, Bitmap image)
+            {
+                Type = type;
+                Image = image ?? throw new ArgumentNullException(nameof(image));
+            }
+        }
         public bool Equals(IGraphicObject other)
         {
-            if (other.ID.Equals(this.ID))
-            {
-                return true;
-            }
-            return base.Equals(other);
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+           
+        }
+        ~GraphicObject() {
+            Dispose();
         }
     }
 

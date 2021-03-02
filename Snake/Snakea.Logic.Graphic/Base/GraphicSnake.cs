@@ -7,15 +7,15 @@ namespace Snake.Logic.Graphic.Base
 {
     public class GraphicSnake : Snake, IGraphicObject
     {
-        public Image ViewContent { get; set; }
+        public Image ViewContent { get;  }
         public bool isVisible { get; set; }
         public int UpdateVersion { get; set; }
 
-        public GraphicSnake(GraphicGamePlataform plataform,Direction direction,Point location) : base(plataform,direction,location) { 
+        public GraphicSnake(in GraphicGamePlataform plataform, in Direction direction, in Point location) : base(plataform,direction,location) { 
         
         }
 
-        public GraphicSnake(Snake snake) : base(snake.Plataform, snake.Direction, snake.Location)
+        public GraphicSnake(in Snake snake) : base(snake.Plataform, snake.Direction, snake.Location)
         {
            
         }
@@ -23,12 +23,12 @@ namespace Snake.Logic.Graphic.Base
         public event DrawingHandler Drawing;
         public event FinishedDrawingHandler FinishDrawing;
 
-        public DrawResult Draw(Logic.Base.Size uiSize)
+        public DrawResult Draw(in Logic.Base.Size uiSize)
         {
             throw new System.NotImplementedException();
         }
 
-        public DrawResult Draw(Logic.Base.Size uiSize, Logic.Base.Size maxSize)
+        public DrawResult Draw(in Logic.Base.Size uiSize, in Logic.Base.Size maxSize)
         {
             throw new System.NotImplementedException();
         }
@@ -40,6 +40,11 @@ namespace Snake.Logic.Graphic.Base
                 return true;
             }
             return base.Equals(other);
+        }
+
+        public void Dispose()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

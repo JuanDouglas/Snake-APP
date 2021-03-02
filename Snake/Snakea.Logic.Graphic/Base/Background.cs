@@ -61,7 +61,7 @@ namespace Snake.Logic.Graphic.Base
             {
                 for (int y = 0; y < Plataform.Size.Height; y++)
                 {
-                    Blocks.Add(new Block(new Point((Width / Plataform.Size.Width) * x, (Width / Plataform.Size.Width) * y), new Point(x, y)));
+                    Blocks.Add(new Block(new Point((Width / Plataform.Size.Width) * x, (Height / Plataform.Size.Height) * y), new Point(x, y)));
                 }
             }
         }

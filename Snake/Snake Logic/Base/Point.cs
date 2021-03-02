@@ -55,5 +55,14 @@
         public int Width { get; set; }
         public int Height { get; set; }
 
+        // override object.Equals
+        public bool Equals(Size size)
+        {
+            if (size.Width==Width&&size.Height==Height)
+            {
+                return true;
+            }
+            return base.Equals(size);    
+        }
     }
 }

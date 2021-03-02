@@ -12,16 +12,14 @@ using Size = Snake.Logic.Base.Size;
 
 namespace Snake.Logic.Graphic.Base.Interfaces
 {
-    public interface IGraphicObject : IPlataformObject, IEquatable<IGraphicObject>
+    public interface IGraphicObject : IPlataformObject, IEquatable<IGraphicObject>, IDisposable
     {
-        Image ViewContent { get; set; }
         bool isVisible { get; set; }
         int UpdateVersion { get; set; }
         event DrawingHandler Drawing;
         event FinishedDrawingHandler FinishDrawing;
-        DrawResult Draw(Size uiSize);
-        DrawResult Draw(Size uiSize,Size maxSize);
-        
+        DrawResult Draw(in Size uiSize);
+        DrawResult Draw(in Size uiSize,in Size maxSize);
     }
     public delegate void DrawingHandler(object sender, DrawingEventArgs args);
     public delegate Image FinishedDrawingHandler(object sender, FinishedDrawingArgs args);

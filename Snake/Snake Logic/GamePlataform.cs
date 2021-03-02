@@ -12,7 +12,7 @@ namespace Snake.Logic
     /// <summary>
     /// Plataforma de jogo.
     /// </summary>
-    public abstract class GamePlataform 
+    public abstract class GamePlataform
     {
         #region Properties
         /// <summary>
@@ -36,7 +36,7 @@ namespace Snake.Logic
             }
         }
         private int _Velocity;
-
+        public Timer UpdateViewTimer { get; set; }
         public virtual List<IPlataformObject> Objects { get; set; }
         /// <summary>
         /// Cobra do jogo.
@@ -46,7 +46,7 @@ namespace Snake.Logic
             get => (Snake)Objects.FirstOrDefault(fs => fs.Type == ObjectType.Snake);
             set
             {
-                if (Objects.FirstOrDefault(fs=>fs.Type==ObjectType.Snake)!=null)
+                if (Objects.FirstOrDefault(fs => fs.Type == ObjectType.Snake) != null)
                 {
                     Objects[GetPositionByID(value.ID)] = value;
                 }
@@ -57,10 +57,11 @@ namespace Snake.Logic
             }
         }
 
-        private int GetPositionByID(Guid id) {
+        private int GetPositionByID(Guid id)
+        {
             for (int i = 0; i < Objects.Count; i++)
             {
-                if (Objects[0].ID==id)
+                if (Objects[0].ID == id)
                 {
                     return i;
                 }
@@ -82,13 +83,14 @@ namespace Snake.Logic
                 }
                 return apples;
             }
-            set {
-                if (value!=null)
+            set
+            {
+                if (value != null)
                 {
 
                 }
             }
-           
+
         }
         /// <summary>
         /// "Poder" das Maçãs (quando irá adicionar no tamanho da cobbra).
@@ -119,7 +121,7 @@ namespace Snake.Logic
         /// <summary>
         /// Evento do movimento da cobra pela plataforma (Acontece no tempo estipulando em "Velocity").
         /// </summary>
-        public event MoveSnakeEventHandler MoveSnakeEvent;
+        public event MoveSnakeEventHandler MoveSnake;
 
         public delegate void LoseGameHandler(object sender, LoseGameArgs args);
         /// <summary>
@@ -153,7 +155,7 @@ namespace Snake.Logic
         /// <param name="width">Largura da Plataforma.</param>
         /// <param name="height">Altura da Plataforma.</param>
         /// <param name="velocity">Velocidade do jogo.</param>
-        public GamePlataform(int width, int height, int velocity) : this(width,height,velocity,2,Direction.Right,new Point(0,0))
+        public GamePlataform(int width, int height, int velocity) : this(width, height, velocity, 2, Direction.Right, new Point(0, 0))
         {
         }
         /// <summary>
@@ -164,28 +166,32 @@ namespace Snake.Logic
         /// <param name="velocity">Velocidade do jogo.</param>
         /// <param name="snake_direction">Direção inicial do cobra na Plataforma.</param>
         /// <param name="snake_point">Localização incial da cobra na Plataforma.</param>
-        public GamePlataform(int width, int height, int velocity,int apples, Direction snake_direction, Point snake_point)
+        public GamePlataform(int width, int height, int velocity, int apples, Direction snake_direction, Point snake_point)
         {
-            Size = new Size(width,height);
+            Size = new Size(width, height);
             Velocity = velocity;
             ApplePower = 2;
             CollectedApples = 1;
             MaxApples = 2;
             AppleDeacreaseSpeed = 200;
+            UpdateViewTimer = GetRefreshTimer();
             Objects = new List<IPlataformObject>();
-            UpdateView += new UpdateViewHandler((object sender, UpdateViewArgs args) => {
-               _ = sender;
+            UpdateView += new UpdateViewHandler((object sender, UpdateViewArgs args) =>
+            {
+                _ = sender;
             });
-            ObjectInteraction += new ObjectInteractionHandler((object sender, ObjectInteractionArgs args)=> {
-                UpdateViewInvoke(sender, new UpdateViewArgs());
+            ObjectInteraction += new ObjectInteractionHandler((object sender, ObjectInteractionArgs args) =>
+            {
+             
             });
-            MoveSnakeEvent += new MoveSnakeEventHandler((object sender, MoveSnakeArgs args) => {
-               ObjectInteraction.Invoke(sender,new ObjectInteractionArgs(null,Snake));
+            MoveSnake += new MoveSnakeEventHandler((object sender, MoveSnakeArgs args) =>
+            {
+                ObjectInteraction.Invoke(sender, new ObjectInteractionArgs(null, Snake));
             });
             CreatePlataform(snake_direction, snake_point);
             for (int i = 0; i < apples; i++)
             {
-                Objects.Add(new Apple(Size,new Point(rd.Next(Size.Width), rd.Next(Size.Height)),ApplePower,AppleDeacreaseSpeed));
+                Objects.Add(new Apple(Size, new Point(rd.Next(Size.Width), rd.Next(Size.Height)), ApplePower, AppleDeacreaseSpeed));
             }
         }
         #endregion
@@ -263,6 +269,7 @@ namespace Snake.Logic
         public virtual void Play()
         {
             MoveTimer.Start();
+            UpdateViewTimer.Start();
         }
 
         /// <summary>
@@ -270,6 +277,15 @@ namespace Snake.Logic
         /// </summary>
         public virtual void Pause()
         {
+            MoveTimer.Stop();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Stop()
+        {
+            MoveTimer.AutoReset = false;
+            MoveTimer.Enabled = false;
             MoveTimer.Stop();
         }
 
@@ -282,7 +298,11 @@ namespace Snake.Logic
             CreatePlataform(snake_direction, snake_point);
             MoveTimer.Start();
         }
-         protected internal virtual void LoseInvoke(object sender, LoseGameArgs args)
+        protected internal virtual void MoveSnakeInvoke(object sender, MoveSnakeArgs args)
+        {
+            MoveSnake.Invoke(sender, args);
+        }
+        protected internal virtual void LoseInvoke(object sender, LoseGameArgs args)
         {
             LoseGame.Invoke(sender, args);
         }
@@ -296,7 +316,7 @@ namespace Snake.Logic
         }
         public virtual void UpdateViewInvoke(object sender, UpdateViewArgs args)
         {
-            UpdateView.Invoke(sender,args);
+            UpdateView.Invoke(sender, args);
         }
         protected internal virtual Timer GetTimer()
         {
@@ -307,24 +327,26 @@ namespace Snake.Logic
             };
             tm.Elapsed += new ElapsedEventHandler((object sender, ElapsedEventArgs args) =>
             {
-                try
-                {
-                    Snake.Move();
-                }
-                catch (Exceptions.SnakeBodyException e)
-                {
-                    LoseGame.Invoke(this, new LoseGameArgs(e, Snake.Legacy, CollectedApples));
-                }
-                catch (Exceptions.SnakeWallException e)
-                {
-                    LoseGame.Invoke(this, new LoseGameArgs(e, Snake.Legacy, CollectedApples));
-                }
-                MoveSnakeEvent.Invoke(this, new MoveSnakeArgs());
+                Snake.Move();
+            });
+            return tm;
+        }
+        protected internal virtual Timer GetRefreshTimer()
+        {
+            Timer tm = new Timer()
+            {
+                Enabled = false,
+                Interval = 500
+            };
+            tm.Elapsed += new ElapsedEventHandler((object sender, ElapsedEventArgs args) =>
+            {
+                UpdateView.Invoke(this,new UpdateViewArgs());
             });
             return tm;
         }
 
-        protected internal virtual void AddApple(Apple apple) {
+        protected internal virtual void AddApple(Apple apple)
+        {
             Objects.Add(apple);
         }
         protected internal virtual void CreatePlataform(Direction snake_direction, Point snake_point)
@@ -387,7 +409,7 @@ namespace Snake.Logic
                     SnakeBlock block = new SnakeBlock(previos.Plataform, previosPoint, previos.Direction, newTurn, index);
                     Snake.Blocks.Add(block);
                 }
-                Objects.Remove(apple);
+                Objects.RemoveAll(rm=>rm.ID==apple.ID);
                 Snake.Plataform.CollectedApples++;
                 Objects.Add(new Apple(Size,
                     new Point(

@@ -114,14 +114,17 @@ namespace Snake.Logic
                 item.AddTuning(Direction.Down, location);
             }
         }
+
         /// <summary>
         /// Faz o movimento do corpo da cobra.
         /// </summary>
-        public void Move()
+        internal void Move()
         {
             Head.MoveSnake();
         }
-
+        public void Kill(KillCause cause) {
+            Plataform.LoseInvoke(this,new LoseGameArgs(null, "You gave up, did you ? ",cause,Legacy,Plataform.CollectedApples));
+        }
         protected internal void SnakeUpgradeInvoke(object sender, SnakeUpgradeArgs args)
         {
             SnakeUpprade.Invoke(sender, args);

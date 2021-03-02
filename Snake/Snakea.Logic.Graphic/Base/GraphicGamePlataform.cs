@@ -32,7 +32,7 @@ namespace Snake.Logic.Graphic.Base
         }
         public GraphicSnake GraphicSnake { get; set; }
         private List<IPlataformObject> objects;
-        private IList<IGraphicObject> graphicObjects;
+        private List<IGraphicObject> graphicObjects;
         public IList<IGraphicObject> GraphicObjects { get => GetGraphicObjects(); }
         public override event UpdateViewHandler UpdateView;
 
@@ -45,6 +45,7 @@ namespace Snake.Logic.Graphic.Base
         {
 
         }
+
         public GraphicGamePlataform(int width, int height, int velocity) : this(width, height, velocity, 3, Direction.Right, new Point(0, 0))
         {
 
@@ -63,7 +64,8 @@ namespace Snake.Logic.Graphic.Base
 
         }
 
-        private IList<IGraphicObject> GetGraphicObjects() {
+        private IList<IGraphicObject> GetGraphicObjects() 
+        {
             foreach (var item in Objects)
             {
                 AddObject(item);
@@ -71,7 +73,8 @@ namespace Snake.Logic.Graphic.Base
             return graphicObjects;
         }
 
-        private void AddObject(IPlataformObject @object) {
+        private void AddObject(IPlataformObject @object)
+        {
             if (!(@object is IGraphicObject))
             {
                 @object = new GraphicObject(@object);
@@ -92,19 +95,21 @@ namespace Snake.Logic.Graphic.Base
             {
                 if (graphictest.UpdateVersion>thiSObject.UpdateVersion)
                 {
-                    if (graphicObjects.Remove(thiSObject))
-                    {
-                        Console.WriteLine($"Removed: {thiSObject.ID}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Not Removed: {thiSObject.ID}");
-                    }
                     graphicObjects.Add(thiSObject);
                 }
             }
-            
+            //UpdateGraficObjects();
         }
+        //private void UpdateGraficObjects() 
+        //{
+        //    for (int i = 0; i < graphicObjects.Count; i++)
+        //    {
+        //        if (Objects.FirstOrDefault(fs => fs.ID == graphicObjects[i].ID) == null)
+        //        {
+        //            graphicObjects.RemoveAll(re => re.ID == graphicObjects[i].ID);
+        //        }
+        //    }
+        //}
         
     }
 

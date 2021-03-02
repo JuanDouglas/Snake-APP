@@ -16,7 +16,7 @@ namespace Snake.Logic.Graphic
         /// <summary>
         /// Image result for drawing.
         /// </summary>
-        public Image Image { get; set; }
+        public Bitmap Image { get; set; }
         /// <summary>
         /// Point of screen for draw object. 
         /// </summary>
@@ -25,7 +25,7 @@ namespace Snake.Logic.Graphic
         /// Drawing time.
         /// </summary>
         public TimeSpan Elapsed { get; set; }
-        public DrawResult(Image image, Point centerPoint)
+        public DrawResult(in Bitmap image, Point centerPoint)
         {
             Image = image ?? throw new ArgumentNullException(nameof(image));
             CenterPoint = centerPoint;

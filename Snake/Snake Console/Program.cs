@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using Snake.Logic;
 using Snake.Logic.Base;
 using Snake.Logic.Enums;
@@ -16,7 +13,7 @@ namespace Snake.Console
     using Console = System.Console;
     class Program
     {
-        static GraphicGamePlataform plataform;
+        static GraphicGamePlataform plataform => gameUI.GamePlataform;
         static GameUI gameUI;
         static int Width = 10;
         static int Height = 10;
@@ -24,20 +21,8 @@ namespace Snake.Console
         static Random rd;
         static void Main(string[] args)
         {
-            rd = new Random();
-            plataform = new GraphicGamePlataform(Width, Height, Velocity);
-            plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
-            plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
-            for (int i = 0; i < rd.Next(0, Width / 2); i++)
-            {
-                plataform.Objects.Add(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
-            }
-            gameUI = new GameUI(plataform, 800, 600);
-            gameUI.NewViewCreate += new GameUI.NewViewCreateHandler((object sender, NewViewCreateEventArgs eventArgs) =>
-            {
-                eventArgs.Result.Save($"{Environment.CurrentDirectory}\\OutPut.jpeg");
-            });
-            gameUI.Plataform.Play();
+            
+            
             ConsoleKeyInfo consoleKey;
             do
             {
@@ -46,19 +31,23 @@ namespace Snake.Console
                 {
                     if (consoleKey.Key == ConsoleKey.UpArrow)
                     {
-                        plataform.Snake.MoveUP();
+                        gameUI.GamePlataform.Snake.MoveUP();
                     }
                     if (consoleKey.Key == ConsoleKey.DownArrow)
                     {
-                        plataform.Snake.MoveDown();
+                        gameUI.GamePlataform.Snake.MoveDown();
                     }
                     if (consoleKey.Key == ConsoleKey.LeftArrow)
                     {
-                        plataform.Snake.MoveLeft();
+                        gameUI.GamePlataform.Snake.MoveLeft();
                     }
                     if (consoleKey.Key == ConsoleKey.RightArrow)
                     {
-                        plataform.Snake.MoveRight();
+                        gameUI.GamePlataform.Snake.MoveRight();
+                    }
+                    if (consoleKey.Key == ConsoleKey.K)
+                    {
+                        gameUI.GamePlataform.Snake.Kill(KillCause.User);
                     }
                 }
                 catch (Exception)
@@ -70,30 +59,37 @@ namespace Snake.Console
         }
         private static void Lose(object sender, LoseGameArgs LoseArg)
         {
-            plataform.Pause();
-            plataform = new GraphicGamePlataform(Width, Height, Velocity);
-            plataform.MoveSnakeEvent += new GamePlataform.MoveSnakeEventHandler(MoveSnake);
-            plataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
-            //for (int i = 0; i < rd.Next(0, Width / 2); i++)
-            //{
-            //    plataform.Objects.Add(new PlataformObject(new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
-            //}
-            plataform.Play();
+            gameUI.GamePlataform = new GraphicGamePlataform(Width, Height, Velocity);
+            gameUI.GamePlataform.UpdateView += new GamePlataform.UpdateViewHandler(UpdateView);
+            gameUI.GamePlataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
+            for (int i = 0; i < rd.Next(0, Width / 2); i++)
+            {
+                gameUI.GamePlataform.Objects.Add(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+            }
+            DrawLose(string.Empty);
+            Thread.Sleep(5000);
+            gameUI.GamePlataform.Play();
         }
-        private static void MoveSnake(object sendeer, MoveSnakeArgs moveArgs)
+        private static string LoseText => " __        ______        _______. _______      _______      ___      .___  ___.  _______  __  \n|  |      /  __  \\      /       ||   ____|    /  _____|    /   \\     |   \\/   | |   ____||  | \n|  |     |  |  |  |    |   (----`|  |__      |  |  __     /  ^  \\    |  \\  /  | |  |__   |  | \n|  |     |  |  |  |     \\   \\    |   __|     |  | |_ |   /  /_\\  \\   |  |\\/|  | |   __|  |  | \n|  `----.|  `--'  | .----)   |   |  |____    |  |__| |  /  _____  \\  |  |  |  | |  |____ |__| \n|_______| \\______/  |_______/    |_______|    \\______| /__/     \\__\\ |__|  |__| |_______|(__) ";
+        private static void DrawLose(string cause) {
+            Console.Clear();
+            Console.WriteLine($"\n\n\n{LoseText}");
+        }
+
+        private static void UpdateView(object sender, UpdateViewArgs moveArgs)
         {
 
             Console.Clear();
-            for (int x = (-1); x < plataform.Size.Height + 2; x++)
+            for (int x = (-1); x < gameUI.GamePlataform.Size.Height + 2; x++)
             {
-                for (int y = (-1); y < plataform.Size.Width + 2; y++)
+                for (int y = (-1); y < gameUI.GamePlataform.Size.Width + 2; y++)
                 {
-                    var px = plataform.GetContentInPoint(new Point(x, y));
+                    var px = gameUI.GamePlataform.GetContentInPoint(new Point(x, y));
                     switch (px)
                     {
                         case PointCotent.Null:
                             bool contain = false;
-                            foreach (var item in plataform.Objects.ToArray())
+                            foreach (var item in gameUI.GamePlataform.Objects.ToArray())
                             {
                                 if (item.Location.Equals(new Point(x, y)))
                                 {
@@ -134,6 +130,7 @@ namespace Snake.Console
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine($"SL: {gameUI.GamePlataform.Snake.Legacy} CL: {gameUI.GamePlataform.CollectedApples}");
             
         }
     }
