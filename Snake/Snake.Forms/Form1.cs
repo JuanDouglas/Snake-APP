@@ -39,7 +39,7 @@ namespace Snake.Forms
 
             for (int i = 0; i < rd.Next(0, Width / 2); i++)
             {
-                gameUI.GamePlataform.Objects.Add(new DefaultObject(gameUI.GamePlataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+                gameUI.GamePlataform.AddObject(new DefaultObject(gameUI.GamePlataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
             tm = new Timer();
             tm.Interval =1000;
@@ -54,7 +54,7 @@ namespace Snake.Forms
             gameUI.GamePlataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
             for (int i = 0; i < rd.Next(0, Width / 2); i++)
             {
-                gameUI.GamePlataform.Objects.Add(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+                gameUI.GamePlataform.AddObject(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
             gameUI.GamePlataform.Play();
         }

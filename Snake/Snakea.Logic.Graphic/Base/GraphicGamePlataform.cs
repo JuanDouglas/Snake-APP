@@ -33,7 +33,7 @@ namespace Snake.Logic.Graphic.Base
         public GraphicSnake GraphicSnake { get; set; }
         private List<IPlataformObject> objects;
         private List<IGraphicObject> graphicObjects;
-        public IList<IGraphicObject> GraphicObjects { get => GetGraphicObjects(); }
+        public IList<IGraphicObject> GraphicObjects { get => graphicObjects; }
         public override event UpdateViewHandler UpdateView;
 
         public GraphicGamePlataform(GamePlataform plataform) : this(plataform.Size.Width,
@@ -43,7 +43,7 @@ namespace Snake.Logic.Graphic.Base
             plataform.Snake.Direction,
             plataform.Snake.Location)
         {
-
+            
         }
 
         public GraphicGamePlataform(int width, int height, int velocity) : this(width, height, velocity, 3, Direction.Right, new Point(0, 0))
@@ -52,7 +52,6 @@ namespace Snake.Logic.Graphic.Base
         }
         public GraphicGamePlataform(int width, int height, int velocity, int apples, Direction snake_direction, Point snake_start_point) : base(width, height, velocity, apples, snake_direction, snake_start_point)
         {
-            graphicObjects = new List<IGraphicObject>();
             UpdateView += new UpdateViewHandler((object sender, UpdateViewArgs args) =>
             {
                 _ = sender;
@@ -64,53 +63,39 @@ namespace Snake.Logic.Graphic.Base
 
         }
 
-        private IList<IGraphicObject> GetGraphicObjects() 
+        public override void RemoveObject(IPlataformObject @object)
         {
-            foreach (var item in Objects)
+            objects.RemoveAll(rmall=>rmall.ID==@object.ID);
+
+            if (graphicObjects == null)
             {
-                AddObject(item);
+                graphicObjects = new List<IGraphicObject>();
             }
-            return graphicObjects;
+            graphicObjects.RemoveAll(rmall => rmall.ID == @object.ID);
         }
 
-        private void AddObject(IPlataformObject @object)
+        public override void AddObject(IPlataformObject @object)
         {
+            RemoveObject(@object);
+            objects.Add(@object);
+           
             if (!(@object is IGraphicObject))
             {
                 @object = new GraphicObject(@object);
             }
 
-            IGraphicObject thiSObject = @object as IGraphicObject;
-            IGraphicObject graphictest = null;
-            if (graphicObjects!=null)
+            IGraphicObject thisObject = @object as IGraphicObject;
+
+            if (graphicObjects==null)
             {
-                graphictest = graphicObjects.FirstOrDefault(fs => fs.ID == @object.ID);
+                graphicObjects = new List<IGraphicObject>();
             }
 
-            if (graphictest==null)
-            {
-                graphicObjects.Add(thiSObject);
-            }
-            else
-            {
-                if (graphictest.UpdateVersion>thiSObject.UpdateVersion)
-                {
-                    graphicObjects.Add(thiSObject);
-                }
-            }
-            //UpdateGraficObjects();
+            graphicObjects.RemoveAll(rmall => rmall.ID == @object.ID);
+            graphicObjects.Add(thisObject);
         }
-        //private void UpdateGraficObjects() 
-        //{
-        //    for (int i = 0; i < graphicObjects.Count; i++)
-        //    {
-        //        if (Objects.FirstOrDefault(fs => fs.ID == graphicObjects[i].ID) == null)
-        //        {
-        //            graphicObjects.RemoveAll(re => re.ID == graphicObjects[i].ID);
-        //        }
-        //    }
-        //}
-        
+      
+
     }
 
 }

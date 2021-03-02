@@ -51,11 +51,10 @@ namespace Snake.Logic.Graphic
         public Image Draw()
         {
             Bitmap result = (Bitmap)Background.GetImage();
-
-            foreach (var item in GamePlataform.GraphicObjects)
+            for (int i = 0; i < GamePlataform.GraphicObjects.Count; i++)
             {
-                DrawResult drawResult = item.Draw(new Size(Width, Height));
-                result = DrawImage(result, (Bitmap)drawResult.Image,
+                DrawResult drawResult = GamePlataform.GraphicObjects[i].Draw(new Size(Width, Height));
+                result = DrawImage(result, new Bitmap(drawResult.Image),
                     Background.GetPointByLocation(drawResult.CenterPoint));
             }
             return result;
@@ -63,11 +62,13 @@ namespace Snake.Logic.Graphic
 
         private Bitmap DrawImage(Bitmap background, Bitmap image, Point point)
         {
-            for (int x = 0; x < image.Width; x++)
+            Bitmap local = new Bitmap(image);
+            for (int x = 0; x < local.Width; x++)
             {
-                for (int y = 0; y < image.Height; y++)
+                for (int y = 0; y < local.Height; y++)
                 {
-                    Color colorPixel = image.GetPixel(x, y);
+                    
+                    Color colorPixel = local.GetPixel(x, y);
                     Color empty = Color.FromArgb(0, 0, 0, 0);
                     if (colorPixel != empty && colorPixel != Color.Empty && colorPixel != Color.Transparent)
                     {

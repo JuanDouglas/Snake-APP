@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Timers;
 using Snake.Logic;
 using Snake.Logic.Base;
 using Snake.Logic.Enums;
@@ -11,6 +12,8 @@ using Snake.Logic.Graphic.EventArgs;
 namespace Snake.Console
 {
     using Console = System.Console;
+    using Timer = System.Timers.Timer;
+
     class Program
     {
         static GraphicGamePlataform plataform => gameUI.GamePlataform;
@@ -19,10 +22,25 @@ namespace Snake.Console
         static int Height = 10;
         static int Velocity = 750;
         static Random rd;
+        static Timer tm;
         static void Main(string[] args)
         {
-            
-            
+            rd = new Random();
+            gameUI = new GameUI(null, 800, 600)
+            {
+                GamePlataform = new GraphicGamePlataform(Width, Height, Velocity)
+            };
+            gameUI.GamePlataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
+
+            for (int i = 0; i < rd.Next(0, Width / 2); i++)
+            {
+                gameUI.GamePlataform.AddObject(new DefaultObject(gameUI.GamePlataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+            }
+            tm = new Timer(1000);
+            tm.Elapsed += new ElapsedEventHandler(Refresh);
+            tm.Start();
+            gameUI.GamePlataform.Play();
+
             ConsoleKeyInfo consoleKey;
             do
             {
@@ -57,6 +75,12 @@ namespace Snake.Console
                 }
             } while (consoleKey.Key != ConsoleKey.Escape);
         }
+
+        private static void Refresh(object sender, ElapsedEventArgs args)
+        {
+            gameUI.Draw().Save($"{Environment.CurrentDirectory}\\OutPut.jpeg");
+        }
+
         private static void Lose(object sender, LoseGameArgs LoseArg)
         {
             gameUI.GamePlataform = new GraphicGamePlataform(Width, Height, Velocity);
@@ -64,7 +88,7 @@ namespace Snake.Console
             gameUI.GamePlataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
             for (int i = 0; i < rd.Next(0, Width / 2); i++)
             {
-                gameUI.GamePlataform.Objects.Add(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+                gameUI.GamePlataform.AddObject(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
             DrawLose(string.Empty);
             Thread.Sleep(5000);

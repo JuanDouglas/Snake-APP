@@ -52,7 +52,7 @@ namespace Snake.Logic
                 }
                 else
                 {
-                    Objects.Add(value);
+                    AddObject(value);
                 }
             }
         }
@@ -75,8 +75,10 @@ namespace Snake.Logic
         {
             get
             {
+
                 List<IPlataformObject> plataformObjects = Objects.Where(wh => wh.Type == ObjectType.Apple).ToList();
                 List<Apple> apples = new List<Apple>();
+
                 foreach (var item in plataformObjects)
                 {
                     apples.Add((Apple)item);
@@ -191,7 +193,7 @@ namespace Snake.Logic
             CreatePlataform(snake_direction, snake_point);
             for (int i = 0; i < apples; i++)
             {
-                Objects.Add(new Apple(Size, new Point(rd.Next(Size.Width), rd.Next(Size.Height)), ApplePower, AppleDeacreaseSpeed));
+               AddObject(new Apple(Size, new Point(rd.Next(Size.Width), rd.Next(Size.Height)), ApplePower, AppleDeacreaseSpeed));
             }
         }
         #endregion
@@ -344,10 +346,14 @@ namespace Snake.Logic
             });
             return tm;
         }
-
-        protected internal virtual void AddApple(Apple apple)
+        public virtual void RemoveObject(IPlataformObject @object)
         {
-            Objects.Add(apple);
+            Objects.RemoveAll(fs=>fs.ID==@object.ID);
+        }
+        public virtual void AddObject(IPlataformObject @object)
+        {
+            RemoveObject(@object);
+            Objects.Add(@object);
         }
         protected internal virtual void CreatePlataform(Direction snake_direction, Point snake_point)
         {
@@ -355,7 +361,7 @@ namespace Snake.Logic
             rd = new Random();
             for (int i = 0; i < MaxApples; i++)
             {
-                AddApple(new Apple(Size,
+                AddObject(new Apple(Size,
                     new Point(
                         rd.Next(0, Size.Width),
                         rd.Next(0, Size.Height)),
@@ -409,9 +415,9 @@ namespace Snake.Logic
                     SnakeBlock block = new SnakeBlock(previos.Plataform, previosPoint, previos.Direction, newTurn, index);
                     Snake.Blocks.Add(block);
                 }
-                Objects.RemoveAll(rm=>rm.ID==apple.ID);
+                RemoveObject(apple);
                 Snake.Plataform.CollectedApples++;
-                Objects.Add(new Apple(Size,
+                AddObject(new Apple(Size,
                     new Point(
                         rd.Next(0, Size.Width),
                         rd.Next(0, Size.Height)),
@@ -419,5 +425,6 @@ namespace Snake.Logic
                     AppleDeacreaseSpeed));
             });
         }
+    
     }
 }

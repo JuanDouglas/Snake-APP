@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using Point = Snake.Logic.Base.Point;
 using Size = Snake.Logic.Base.Size;
@@ -19,11 +21,11 @@ namespace Snake.Logic.Graphic.Base
         public int UpdateVersion { get; set; }
         public GraphicObject(PlataformObject plataformObject) : this(plataformObject.PlataformSize, plataformObject.Location, plataformObject.Content, plataformObject.Type)
         {
-
+            ID = plataformObject.ID;
         }
         public GraphicObject(IPlataformObject plataformObject) : this(plataformObject.PlataformSize, plataformObject.Location, plataformObject.Content, plataformObject.Type)
         {
-
+            ID = plataformObject.ID;
         }
         public GraphicObject(Size plataformSize, Point location,  ObjectContent content,  ObjectType type) : base(plataformSize, location, content, type)
         {
@@ -86,17 +88,27 @@ namespace Snake.Logic.Graphic.Base
                 imageByType = ImagesByType.FirstOrDefault(fs => fs.Type == type);
             }
 
-            Bitmap image = imageByType.Image;
-
-            if (!size.Equals(new Size()))
+            lock (imageByType.Image)
             {
-                if (image.Width != size.Width || image.Height != size.Height)
+                ;
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    ImagesByType.FirstOrDefault(fs => fs.Type == type).Image = new Bitmap(image, new System.Drawing.Size(size.Width, size.Height));
-                    image = ImagesByType.FirstOrDefault(fs => fs.Type == type).Image;
+                    imageByType.Image.Save(ms, ImageFormat.Png);
+                    Bitmap image = (Bitmap)Bitmap.FromStream(ms);
+                    if (!size.Equals(new Size()))
+                    {
+                        if (image.Width != size.Width || image.Height != size.Height)
+                        {
+                            ImagesByType.FirstOrDefault(fs => fs.Type == type).Image = new Bitmap(image, new System.Drawing.Size(size.Width, size.Height));
+                            image = ImagesByType.FirstOrDefault(fs => fs.Type == type).Image;
+                        }
+                    }
+                    return image;
                 }
             }
-            return image;
+            
+
+           
         }
         private static void CreateImages() {
             ImagesByType = new List<ImageByType>
