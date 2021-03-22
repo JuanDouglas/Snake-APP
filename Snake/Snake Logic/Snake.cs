@@ -48,7 +48,7 @@ namespace Snake.Logic
         /// Construtor da cobra.
         /// </summary>
         /// <param name="plataform">Plataforma que a cobra irá ficar.</param>
-        public Snake(GamePlataform plataform, Direction direction, Point location) : base(plataform.Size,location, ObjectContent.Solid, ObjectType.Snake)
+        public Snake(in GamePlataform plataform, Direction direction, Point location) : base(plataform.Size,location, ObjectContent.Solid, ObjectType.Snake)
         {
             if (plataform.Snake != null)
             {

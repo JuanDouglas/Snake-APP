@@ -1,7 +1,6 @@
 ﻿using Snake.Logic.Base;
 using Snake.Logic.Enums;
 using Snake.Logic.EventArgs;
-using Snake.Logic.Exceptions;
 using System.Linq;
 
 namespace Snake.Logic
@@ -18,11 +17,8 @@ namespace Snake.Logic
         /// <param name="snake">Cobra "dona" da cabeça.</param>
         /// <param name="location">Local incial</param>
         /// <param name="direction">Direção Incial</param>
-        public Head(in Snake snake, Point location, Direction direction) : base(snake.Plataform, location, direction, 0)
-        {
-            Snake = snake;
-        }
-
+        public Head(in Snake snake, Point location, Direction direction) : 
+            base(snake.Plataform, location, direction, 0) => Snake = snake;
         /// <summary>
         /// Move a cobra.
         /// </summary>

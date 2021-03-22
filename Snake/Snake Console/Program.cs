@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Timers;
-using Snake.Logic;
+﻿using Snake.Logic;
 using Snake.Logic.Base;
 using Snake.Logic.Enums;
 using Snake.Logic.EventArgs;
 using Snake.Logic.Graphic;
 using Snake.Logic.Graphic.Base;
-using Snake.Logic.Graphic.EventArgs;
+using System;
+using System.Threading;
+using System.Timers;
 
 namespace Snake.Console
 {

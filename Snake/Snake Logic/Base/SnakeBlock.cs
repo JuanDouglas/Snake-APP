@@ -48,14 +48,8 @@ namespace Snake.Logic.Base
         /// <param name="location">Local inicial.</param>
         /// <param name="direction">Direção inicial.</param>
         /// <param name="index">Numéro no índicie.</param>
-        public SnakeBlock(in GamePlataform plataform, Point location, Direction direction, int index)
-        {
-            Location = location;
-            Direction = direction;
-            Index = index;
-            Turnings = new List<Turning>();
-            Plataform = plataform ?? throw new ArgumentNullException(nameof(plataform));
-        }
+        public SnakeBlock(in GamePlataform plataform, Point location, Direction direction, int index) :
+            this(plataform, location, direction, new List<Turning>(), index) { }
         /// <summary>
         /// Faz o movimento deste bloco de acordo com a direção, caso tenha uma curva ("Turning") adiciona faz a curva e muda a direção.
         /// </summary>

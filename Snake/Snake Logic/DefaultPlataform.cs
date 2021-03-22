@@ -8,6 +8,7 @@ namespace Snake.Logic
 {
     public class DefaultPlataform : GamePlataform
     {
+        public DefaultPlataform(int width, int height) : base(width, height, DefaultVelocity) { }
         public DefaultPlataform(int width, int height, int velocity) : base(width, height, velocity) { }
     }
 }

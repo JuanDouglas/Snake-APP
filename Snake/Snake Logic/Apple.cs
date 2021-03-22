@@ -19,7 +19,7 @@ namespace Snake.Logic
         /// </summary>
         /// <param name="location">Local da Maçã.</param>
         /// <param name="power">"Poder" da Maçã.</param>
-        public Apple(Size plataformSize,Point location, int power, int speed_deacrease) : base(plataformSize,location, ObjectContent.Not_Solid,ObjectType.Apple)
+        public Apple(in Size plataformSize,Point location, int power, int speed_deacrease) : base(plataformSize,location, ObjectContent.Not_Solid,ObjectType.Apple)
         {
             Location = location;
             AppleDeacreaseSpeed = speed_deacrease;

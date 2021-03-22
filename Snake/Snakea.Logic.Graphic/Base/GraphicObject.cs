@@ -84,7 +84,7 @@ namespace Snake.Logic.Graphic.Base
             ImageByType imageByType = ImagesByType.FirstOrDefault(fs => fs.Type == type);
             if (imageByType==null)
             {
-                type = ObjectType.Default;
+                type = PlataformObject.DefaultType;
                 imageByType = ImagesByType.FirstOrDefault(fs => fs.Type == type);
             }
 
@@ -115,7 +115,7 @@ namespace Snake.Logic.Graphic.Base
             {
                 new ImageByType(ObjectType.Apple, Properties.Resources.apple),
                 new ImageByType(ObjectType.Tree, Properties.Resources.tree),
-                new ImageByType(ObjectType.Default,Properties.Resources._default)
+                new ImageByType(PlataformObject.DefaultType,Properties.Resources._default)
             };
         }
         private static List<ImageByType> ImagesByType { get; set; }

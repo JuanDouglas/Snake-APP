@@ -38,6 +38,12 @@ namespace Snake.Logic.Graphic
             }
         }
         private GraphicGamePlataform _gamePlataform;
+
+        public GameUI(int width, int height) :
+            this(new GraphicGamePlataform(width, height, Logic.GamePlataform.DefaultVelocity), width, height)
+        {
+
+        }
         public GameUI(in GraphicGamePlataform plataform, int width, int height)
         {
             Width = width;
@@ -67,7 +73,7 @@ namespace Snake.Logic.Graphic
             {
                 for (int y = 0; y < local.Height; y++)
                 {
-                    
+
                     Color colorPixel = local.GetPixel(x, y);
                     Color empty = Color.FromArgb(0, 0, 0, 0);
                     if (colorPixel != empty && colorPixel != Color.Empty && colorPixel != Color.Transparent)

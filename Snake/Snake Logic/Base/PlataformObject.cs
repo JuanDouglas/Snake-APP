@@ -12,7 +12,13 @@ namespace Snake.Logic.Base
         public ObjectType Type { get; set; }
         public Guid ID { get; set; }
         public Size PlataformSize { get; set; }
-        public PlataformObject(in Size plataformSize,Point location, ObjectContent content, ObjectType type)
+
+        public const ObjectContent DefaultContent = ObjectContent.Not_Solid;
+        public const ObjectType DefaultType = ObjectType.None;
+
+        public PlataformObject(in Size plataformSize) : this(plataformSize, new Point()) { }
+        public PlataformObject(in Size plataformSize, Point point) : this(plataformSize, point, DefaultContent, DefaultType) { }
+        public PlataformObject(in Size plataformSize, Point location, ObjectContent content, ObjectType type)
         {
             Location = location;
             Content = content;
@@ -20,6 +26,7 @@ namespace Snake.Logic.Base
             PlataformSize = plataformSize;
             ID = Guid.NewGuid();
         }
+
         public override bool Equals(object obj)
         {
             if (obj is PlataformObject)
@@ -32,7 +39,7 @@ namespace Snake.Logic.Base
             return base.Equals(obj);
         }
 
-     
+
     }
 
 }

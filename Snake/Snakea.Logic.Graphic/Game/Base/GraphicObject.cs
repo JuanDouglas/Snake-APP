@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Snake.Logic.Base;
+using Snake.Logic.Enums;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake.Logic.Base;
-using Snake.Logic.Enums;
 using Point = Snake.Logic.Base.Point;
+using Size = Snake.Logic.Base.Size;
 
 namespace Snake.Logic.Graphic.Game.Base
 {
@@ -17,7 +18,7 @@ namespace Snake.Logic.Graphic.Game.Base
         {
             ID = father.ID;
         }
-        public GraphicObject(Image defaultView, Point location, ObjectContent content, ObjectType type) : base(location, content, type)
+        public GraphicObject(Image defaultView, Point location, ObjectContent content, ObjectType type) : base(new Size(),location, content, type)
         {
             View = defaultView;
         }

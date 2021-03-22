@@ -6,6 +6,6 @@
         Apple,
         Snake,
         Lake,
-        Default
+        None
     }
 }

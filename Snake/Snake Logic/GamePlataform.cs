@@ -115,6 +115,13 @@ namespace Snake.Logic
         /// </summary>
         #endregion
 
+        #region Constants
+
+        public const int DefaultVelocity = 750;
+        public const Direction DefaultDirection = Direction.Left;
+
+        #endregion
+
         #region Events
         public virtual int AppleDeacreaseSpeed { get; set; }
         private Random rd;
@@ -157,7 +164,7 @@ namespace Snake.Logic
         /// <param name="width">Largura da Plataforma.</param>
         /// <param name="height">Altura da Plataforma.</param>
         /// <param name="velocity">Velocidade do jogo.</param>
-        public GamePlataform(int width, int height, int velocity) : this(width, height, velocity, 2, Direction.Right, new Point(0, 0))
+        public GamePlataform(int width, int height, int velocity) : this(width, height, velocity, 2, DefaultDirection, new Point())
         {
         }
         /// <summary>
@@ -184,7 +191,7 @@ namespace Snake.Logic
             });
             ObjectInteraction += new ObjectInteractionHandler((object sender, ObjectInteractionArgs args) =>
             {
-             
+
             });
             MoveSnake += new MoveSnakeEventHandler((object sender, MoveSnakeArgs args) =>
             {
@@ -193,7 +200,7 @@ namespace Snake.Logic
             CreatePlataform(snake_direction, snake_point);
             for (int i = 0; i < apples; i++)
             {
-               AddObject(new Apple(Size, new Point(rd.Next(Size.Width), rd.Next(Size.Height)), ApplePower, AppleDeacreaseSpeed));
+                AddObject(new Apple(Size, new Point(rd.Next(Size.Width), rd.Next(Size.Height)), ApplePower, AppleDeacreaseSpeed));
             }
         }
         #endregion
@@ -342,13 +349,13 @@ namespace Snake.Logic
             };
             tm.Elapsed += new ElapsedEventHandler((object sender, ElapsedEventArgs args) =>
             {
-                UpdateView.Invoke(this,new UpdateViewArgs());
+                UpdateView.Invoke(this, new UpdateViewArgs());
             });
             return tm;
         }
         public virtual void RemoveObject(IPlataformObject @object)
         {
-            Objects.RemoveAll(fs=>fs.ID==@object.ID);
+            Objects.RemoveAll(fs => fs.ID == @object.ID);
         }
         public virtual void AddObject(IPlataformObject @object)
         {
@@ -425,6 +432,6 @@ namespace Snake.Logic
                     AppleDeacreaseSpeed));
             });
         }
-    
+
     }
 }

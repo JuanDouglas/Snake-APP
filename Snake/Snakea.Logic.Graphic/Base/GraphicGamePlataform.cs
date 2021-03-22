@@ -31,6 +31,7 @@ namespace Snake.Logic.Graphic.Base
             }
         }
         public GraphicSnake GraphicSnake { get; set; }
+       
         private List<IPlataformObject> objects;
         private List<IGraphicObject> graphicObjects;
         public IList<IGraphicObject> GraphicObjects { get => graphicObjects; }
@@ -46,7 +47,7 @@ namespace Snake.Logic.Graphic.Base
             
         }
 
-        public GraphicGamePlataform(int width, int height, int velocity) : this(width, height, velocity, 3, Direction.Right, new Point(0, 0))
+        public GraphicGamePlataform(int width, int height, int velocity) : this(width, height, velocity, 3, DefaultDirection, new Point(0, 0))
         {
 
         }

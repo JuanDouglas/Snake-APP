@@ -1,5 +1,4 @@
-﻿using Snake.Logic.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake.Logic.Graphic.Game.Base
 {
-    public class GraphicsObjectsManager : ObjectsManager
+    public class GraphicsObjectsManager 
     {
         private List<GraphicObject> plataformObjects;
         public GraphicObject this[int index] { get => plataformObjects[index]; set => plataformObjects[index] = value; }

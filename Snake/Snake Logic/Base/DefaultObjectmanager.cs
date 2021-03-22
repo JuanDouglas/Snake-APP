@@ -5,17 +5,17 @@ using Snake.Logic.Graphic.EventArgs;
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Point = Snake.Logic.Base.Point;
 using Size = Snake.Logic.Base.Size;
+
 namespace Snake.Logic.Graphic.Base
 {
     public class GraphicObject : PlataformObject, IGraphicObject
     {
         public Image ViewContent { get; set; }
         public bool isVisible { get; set; }
+        public int UpdateVersion { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public GraphicObject(Size plataformSize, Point location, ObjectContent content, ObjectType type) : this(plataformSize, location, content, type, new Bitmap(0, 0))
         {
 
@@ -27,14 +27,14 @@ namespace Snake.Logic.Graphic.Base
 
         public event DrawingHandler Drawing;
         public event FinishedDrawingHandler FinishDrawing;
-        public DrawResult Draw(Size uiSize)
+        public DrawResult Draw(in Size uiSize)
         {
-            Stopwatch stopwatch = new Stopwatch();
+            Stopwatch stopwatch = new();
             stopwatch.Start();
 
             Drawing.Invoke(this, new DrawingEventArgs());
 
-            DrawResult drawResult = new DrawResult(ViewContent, Location);
+            DrawResult drawResult = new((Bitmap)ViewContent, Location);
 
             stopwatch.Stop();
 
@@ -44,7 +44,7 @@ namespace Snake.Logic.Graphic.Base
             return drawResult;
         }
 
-        public DrawResult Draw(Size uiSize, Size maxSize)
+        public DrawResult Draw(in Size uiSize, in Size maxSize)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -56,6 +56,16 @@ namespace Snake.Logic.Graphic.Base
             stopwatch.Stop();
             drawResult.Elapsed += stopwatch.Elapsed;
             return drawResult;
+        }
+
+        public bool Equals(IGraphicObject other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 
