@@ -40,29 +40,29 @@ namespace Snake.Console
             tm.Start();
             gameUI.GamePlataform.Play();
 
-            char consoleKey;
+            ConsoleKeyInfo consoleKey;
             do
             {
-                consoleKey = (char)Console.Read();
+                consoleKey = Console.ReadKey();
                 try
                 {
-                    if (consoleKey == 0x18)
+                    if (consoleKey.Key == ConsoleKey.UpArrow)
                     {
                         gameUI.GamePlataform.Snake.MoveUP();
                     }
-                    if (consoleKey== 0x19)
+                    if (consoleKey.Key == ConsoleKey.DownArrow)
                     {
                         gameUI.GamePlataform.Snake.MoveDown();
                     }
-                    if (consoleKey  == 0x1B)
+                    if (consoleKey.Key == ConsoleKey.LeftArrow)
                     {
                         gameUI.GamePlataform.Snake.MoveLeft();
                     }
-                    if (consoleKey == 0x1A)
+                    if (consoleKey.Key == ConsoleKey.RightArrow)
                     {
                         gameUI.GamePlataform.Snake.MoveRight();
                     }
-                    if (consoleKey == 0x6B)
+                    if (consoleKey.Key == ConsoleKey.K)
                     {
                         gameUI.GamePlataform.Snake.Kill(KillCause.User);
                     }
@@ -72,7 +72,7 @@ namespace Snake.Console
                     Console.Clear();
                     Console.WriteLine("Ei!");
                 }
-            } while (consoleKey != 0x1B);
+            } while (consoleKey.Key != ConsoleKey.Escape);
         }
 
         private static void Refresh(object sender, ElapsedEventArgs args)
@@ -94,7 +94,8 @@ namespace Snake.Console
             gameUI.GamePlataform.Play();
         }
         private static string LoseText => " __        ______        _______. _______      _______      ___      .___  ___.  _______  __  \n|  |      /  __  \\      /       ||   ____|    /  _____|    /   \\     |   \\/   | |   ____||  | \n|  |     |  |  |  |    |   (----`|  |__      |  |  __     /  ^  \\    |  \\  /  | |  |__   |  | \n|  |     |  |  |  |     \\   \\    |   __|     |  | |_ |   /  /_\\  \\   |  |\\/|  | |   __|  |  | \n|  `----.|  `--'  | .----)   |   |  |____    |  |__| |  /  _____  \\  |  |  |  | |  |____ |__| \n|_______| \\______/  |_______/    |_______|    \\______| /__/     \\__\\ |__|  |__| |_______|(__) ";
-        private static void DrawLose(string cause) {
+        private static void DrawLose(string cause)
+        {
             Console.Clear();
             Console.WriteLine($"\n\n\n{LoseText}");
         }
@@ -154,7 +155,7 @@ namespace Snake.Console
                 Console.WriteLine();
             }
             Console.WriteLine($"SL: {gameUI.GamePlataform.Snake.Legacy} CL: {gameUI.GamePlataform.CollectedApples}");
-            
+
         }
     }
 }

@@ -17,7 +17,7 @@ using Point = Snake.Logic.Base.Point;
 
 namespace Snake.Forms
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
 
         GraphicGamePlataform plataform => gameUI.GamePlataform;
@@ -27,7 +27,7 @@ namespace Snake.Forms
         int Velocity = 750;
         Random rd;
         Timer tm;
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
             rd = new Random();

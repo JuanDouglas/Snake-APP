@@ -118,7 +118,7 @@ namespace Snake.Logic
         #region Constants
 
         public const int DefaultVelocity = 750;
-        public const Direction DefaultDirection = Direction.Left;
+        public const Direction DefaultDirection = Direction.Right;
 
         #endregion
 
