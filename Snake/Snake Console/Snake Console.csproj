@@ -1,14 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿ 
+<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net5.0-windows</TargetFramework>
-		<UseWindowsForms>true</UseWindowsForms>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>Challenger.Generic.Console</RootNamespace>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Snakea.Logic.Graphic\Snake.Logic.Graphic.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+      <ProjectReference Include="..\Snakea.Logic.Graphic\Snake.Logic.Graphic.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -81,15 +81,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Snake Logic\Snake Logic.csproj">
-      <Project>{5FE3D2C8-6345-48A0-AC84-060900041E2B}</Project>
-      <Name>Snake Logic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Snakea.Logic.Graphic\Snake.Logic.Graphic.csproj">
-      <Project>{5c5d91ad-42a7-4ed0-8f2a-e0a86a6379de}</Project>
-      <Name>Snake.Logic.Graphic</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

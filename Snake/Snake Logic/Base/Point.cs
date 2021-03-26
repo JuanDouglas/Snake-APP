@@ -44,6 +44,11 @@
             }
             return false;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
     public struct Size {
         public Size(int width, int height)

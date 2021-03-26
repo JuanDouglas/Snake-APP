@@ -1,15 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<OutputType>Library</OutputType>
-		<TargetFramework>net5.0-windows</TargetFramework>
-		<UseWindowsForms>true</UseWindowsForms>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ApplicationIcon>snake.ico</ApplicationIcon>
-	</PropertyGroup>
+	  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Snake Logic\Snake Logic.csproj" />
-	</ItemGroup>
+	  <ItemGroup>
+	    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+	    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
+	  </ItemGroup>
+
+	  <ItemGroup>
+	    <ProjectReference Include="..\Snake Logic\Snake.Logic.csproj" />
+	  </ItemGroup>
+
+	  <ItemGroup>
+	    <Compile Update="Properties\Resources.Designer.cs">
+	      <DesignTime>True</DesignTime>
+	      <AutoGen>True</AutoGen>
+	      <DependentUpon>Resources.resx</DependentUpon>
+	    </Compile>
+	  </ItemGroup>
+
+	  <ItemGroup>
+	    <EmbeddedResource Update="Properties\Resources.resx">
+	      <Generator>ResXFileCodeGenerator</Generator>
+	      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	    </EmbeddedResource>
+	  </ItemGroup>
 
 </Project>

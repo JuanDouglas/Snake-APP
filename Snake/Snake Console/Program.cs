@@ -40,29 +40,29 @@ namespace Snake.Console
             tm.Start();
             gameUI.GamePlataform.Play();
 
-            ConsoleKeyInfo consoleKey;
+            char consoleKey;
             do
             {
-                consoleKey = Console.ReadKey();
+                consoleKey = (char)Console.Read();
                 try
                 {
-                    if (consoleKey.Key == ConsoleKey.UpArrow)
+                    if (consoleKey == 0x18)
                     {
                         gameUI.GamePlataform.Snake.MoveUP();
                     }
-                    if (consoleKey.Key == ConsoleKey.DownArrow)
+                    if (consoleKey== 0x19)
                     {
                         gameUI.GamePlataform.Snake.MoveDown();
                     }
-                    if (consoleKey.Key == ConsoleKey.LeftArrow)
+                    if (consoleKey  == 0x1B)
                     {
                         gameUI.GamePlataform.Snake.MoveLeft();
                     }
-                    if (consoleKey.Key == ConsoleKey.RightArrow)
+                    if (consoleKey == 0x1A)
                     {
                         gameUI.GamePlataform.Snake.MoveRight();
                     }
-                    if (consoleKey.Key == ConsoleKey.K)
+                    if (consoleKey == 0x6B)
                     {
                         gameUI.GamePlataform.Snake.Kill(KillCause.User);
                     }
@@ -72,7 +72,7 @@ namespace Snake.Console
                     Console.Clear();
                     Console.WriteLine("Ei!");
                 }
-            } while (consoleKey.Key != ConsoleKey.Escape);
+            } while (consoleKey != 0x1B);
         }
 
         private static void Refresh(object sender, ElapsedEventArgs args)

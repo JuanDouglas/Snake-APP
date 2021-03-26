@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake Logic", "Snake Logic\Snake Logic.csproj", "{5FE3D2C8-6345-48A0-AC84-060900041E2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snake.Logic", "Snake Logic\Snake.Logic.csproj", "{5FE3D2C8-6345-48A0-AC84-060900041E2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake Console", "Snake Console\Snake Console.csproj", "{0FFA86A8-740F-4E4A-9BEC-72B802B4177E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snake Console", "Snake Console\Snake Console.csproj", "{0FFA86A8-740F-4E4A-9BEC-72B802B4177E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake App", "Snake App\Snake App.csproj", "{AD8E3445-D60C-40FD-B283-C2A903C1F5C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake.Logic.Graphic", "Snakea.Logic.Graphic\Snake.Logic.Graphic.csproj", "{5C5D91AD-42A7-4ED0-8F2A-E0A86A6379DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snake.Logic.Graphic", "Snakea.Logic.Graphic\Snake.Logic.Graphic.csproj", "{5C5D91AD-42A7-4ED0-8F2A-E0A86A6379DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake.Forms", "Snake.Forms\Snake.Forms.csproj", "{D8BFE9C9-59CD-4C51-A5C6-FDB89D9CDB35}"
 EndProject

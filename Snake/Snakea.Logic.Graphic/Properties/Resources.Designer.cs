@@ -63,9 +63,9 @@ namespace Snake.Logic.Graphic.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _default {
+        internal static System.Drawing.Bitmap apple {
             get {
-                object obj = ResourceManager.GetObject("_default", resourceCulture);
+                object obj = ResourceManager.GetObject("apple", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Snake.Logic.Graphic.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap apple {
+        internal static System.Drawing.Bitmap default_image {
             get {
-                object obj = ResourceManager.GetObject("apple", resourceCulture);
+                object obj = ResourceManager.GetObject("default_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

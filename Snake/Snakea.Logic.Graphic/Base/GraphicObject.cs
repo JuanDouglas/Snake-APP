@@ -6,10 +6,10 @@ using Snake.Logic.Graphic.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Drawing;
+using System.Drawing.Imaging;
 using Point = Snake.Logic.Base.Point;
 using Size = Snake.Logic.Base.Size;
 
@@ -115,7 +115,7 @@ namespace Snake.Logic.Graphic.Base
             {
                 new ImageByType(ObjectType.Apple, Properties.Resources.apple),
                 new ImageByType(ObjectType.Tree, Properties.Resources.tree),
-                new ImageByType(PlataformObject.DefaultType,Properties.Resources._default)
+                new ImageByType(PlataformObject.DefaultType,Properties.Resources.default_image)
             };
         }
         private static List<ImageByType> ImagesByType { get; set; }
