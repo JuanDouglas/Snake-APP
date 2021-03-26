@@ -4,14 +4,14 @@ namespace Snake.Forms
     partial class Form1
     {
         /// <summary>
-        /// Variável de designer necessária.
+        ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Limpar os recursos que estão sendo usados.
+        ///  Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true se for necessário descartar os recursos gerenciados; caso contrário, false.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,30 +21,31 @@ namespace Snake.Forms
             base.Dispose(disposing);
         }
 
-        #region Código gerado pelo Windows Form Designer
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// Método necessário para suporte ao Designer - não modifique 
-        /// o conteúdo deste método com o editor de código.
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.resultPic = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.resultPic)).BeginInit();
             this.SuspendLayout();
             // 
             // resultPic
             // 
-            this.resultPic.Location = new System.Drawing.Point(85, 81);
+            this.resultPic.Image = ((System.Drawing.Image)(resources.GetObject("resultPic.Image")));
+            this.resultPic.Location = new System.Drawing.Point(115, 106);
             this.resultPic.Name = "resultPic";
-            this.resultPic.Size = new System.Drawing.Size(484, 269);
-            this.resultPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.resultPic.Size = new System.Drawing.Size(394, 221);
             this.resultPic.TabIndex = 0;
             this.resultPic.TabStop = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.resultPic);

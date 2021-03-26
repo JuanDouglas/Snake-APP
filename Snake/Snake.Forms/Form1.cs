@@ -4,7 +4,6 @@ using Snake.Logic.Enums;
 using Snake.Logic.EventArgs;
 using Snake.Logic.Graphic;
 using Snake.Logic.Graphic.Base;
-using Snake.Logic.Graphic.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,12 +19,13 @@ namespace Snake.Forms
 {
     public partial class Form1 : Form
     {
-         GraphicGamePlataform plataform => gameUI.GamePlataform;
-         GameUI gameUI;
-         int Width = 10;
-         int Height = 10;
-         int Velocity = 750;
-         Random rd;
+
+        GraphicGamePlataform plataform => gameUI.GamePlataform;
+        GameUI gameUI;
+        int Width = 10;
+        int Height = 10;
+        int Velocity = 750;
+        Random rd;
         Timer tm;
         public Form1()
         {
@@ -35,14 +35,14 @@ namespace Snake.Forms
             {
                 GamePlataform = new GraphicGamePlataform(Width, Height, Velocity)
             };
-            gameUI.GamePlataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
+            gameUI.GamePlataform.LoseGame += new GraphicGamePlataform.LoseGameHandler(Lose);
 
             for (int i = 0; i < rd.Next(0, Width / 2); i++)
             {
                 gameUI.GamePlataform.AddObject(new DefaultObject(gameUI.GamePlataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
             }
             tm = new Timer();
-            tm.Interval =1000;
+            tm.Interval = 1000;
             tm.Tick += new EventHandler(Refresh);
             tm.Start();
             gameUI.GamePlataform.Play();
@@ -50,11 +50,11 @@ namespace Snake.Forms
         private void Lose(object sender, LoseGameArgs LoseArg)
         {
             gameUI.GamePlataform = new GraphicGamePlataform(Width, Height, Velocity);
-           
-            gameUI.GamePlataform.LoseGame += new GamePlataform.LoseGameHandler(Lose);
+
+            gameUI.GamePlataform.LoseGame += new GraphicGamePlataform.LoseGameHandler(Lose);
             for (int i = 0; i < rd.Next(0, Width / 2); i++)
             {
-                gameUI.GamePlataform.AddObject(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree));
+                gameUI.GamePlataform.AddObject(new GraphicObject(new DefaultObject(plataform.Size, new Point(rd.Next(2, Width), rd.Next(2, Width)), ObjectContent.Solid, ObjectType.Tree)));
             }
             gameUI.GamePlataform.Play();
         }
